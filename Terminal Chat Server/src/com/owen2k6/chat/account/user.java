@@ -4,4 +4,5 @@ public class user {
     public String username;
     public String password;
     public String salt;
+    public int permission;
 }

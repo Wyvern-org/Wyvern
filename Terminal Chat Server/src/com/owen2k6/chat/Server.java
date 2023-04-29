@@ -21,7 +21,8 @@ public class Server {
     private int port = 5600;
     private List<Client> clients;
 
-    Gson gson = new Gson();
+
+    public Gson gson = new Gson();
 
     public byte[] generateSalt(int length) {
         SecureRandom random = new SecureRandom();
@@ -29,22 +30,27 @@ public class Server {
         random.nextBytes(salt);
         return salt;
     }
-    public boolean login(String username, String password) throws FileNotFoundException {
-        user u = gson.fromJson(new FileReader("data/users/" + username + ".json"), user.class);
-        String hash = hash(password, u.salt);
-        return Objects.requireNonNull(hash).equals(u.password);
+    public boolean login(String username, String password) throws IOException {
+        try (FileReader reader = new FileReader("data/users/" + username + ".json")) {
+            user u = gson.fromJson(reader, user.class);
+            String hash = hash(password, u.salt);
+            return Objects.requireNonNull(hash).equals(u.password);
+        }
     }
 
     public boolean register(String username, String password) throws IOException {
-        user u = new user();
-        String saltString = Base64.getEncoder().encodeToString(generateSalt(16));
+        try (FileWriter writer = new FileWriter("data/users/" + username + ".json")) {
+            user u = new user();
+            String saltString = Base64.getEncoder().encodeToString(generateSalt(16));
 
-        u.username = username;
-        u.password = hash(password, saltString);
-        u.salt = saltString;
-        gson.toJson(u, user.class, new FileWriter("data/users/" + username + ".json"));
-        String hash = hash(password, u.salt);
-        return Objects.requireNonNull(hash).equals(u.password);
+            u.username = username;
+            u.password = hash(password, saltString);
+            u.salt = saltString;
+            u.permission = 0;
+            gson.toJson(u, user.class, writer);
+            String hash = hash(password, u.salt);
+            return Objects.requireNonNull(hash).equals(u.password);
+        }
     }
 
     public static String hash(String input, String salt)
@@ -79,11 +85,28 @@ public class Server {
 
     public void start() {
         System.out.println("Server started on port " + port);
+        String directoryName = "data/users";
+        File directory = new File(directoryName);
+        if (!directory.exists()) {
+            System.out.println("Directory " + directoryName + " does not exist.");
+
+            // Try to create the directory
+            try {
+                directory.mkdirs();
+                System.out.println("Created directory " + directoryName);
+            } catch (SecurityException e) {
+                System.err.println("Unable to create directory " + directoryName);
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Directory " + directoryName + " already exists.");
+        }
         while (true) {
             try {
                 Client client = new Client(this, server.accept());
                 System.out.println("Client join: " + client);
                 clients.add(client);
+                client.start();
             } catch (IOException e) {
                 e.printStackTrace();
             }

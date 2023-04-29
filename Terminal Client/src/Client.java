@@ -36,7 +36,7 @@ public class Client {
                     boolean done = false;
                     while (!done) {
                         String message = dis.readUTF();
-                        System.out.println(message);
+                        System.out.println("Received message: " + message); // Debug statement
                         done = message.equals("bye");
                     }
                 } catch (IOException e) {
@@ -59,6 +59,7 @@ public class Client {
                 String message = scanner.nextLine();
                 dos.writeUTF(message);
                 dos.flush();
+                System.out.println("Sent message: " + message); // Debug statement
                 done = message.equals("bye");
             }
 
