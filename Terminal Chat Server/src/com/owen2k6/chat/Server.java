@@ -1,6 +1,7 @@
 package com.owen2k6.chat;
 import com.google.gson.Gson;
 import com.owen2k6.chat.account.user;
+import com.owen2k6.chat.threads.Client;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -18,7 +19,7 @@ public class Server {
 
     private ServerSocket server;
     private int port = 5600;
-    private List<Socket> clients;
+    private List<Client> clients;
 
     Gson gson = new Gson();
 
@@ -80,46 +81,25 @@ public class Server {
         System.out.println("Server started on port " + port);
         while (true) {
             try {
-                // Accept a new client connection
-                Socket client = server.accept();
-                System.out.println("Client connected: " + client);
+                Client client = new Client(this, server.accept());
+                System.out.println("Client join: " + client);
                 clients.add(client);
-
-                // Start a new thread to handle incoming messages from the client
-                Thread thread = new Thread(() -> {
-                    try {
-                        DataInputStream dis = new DataInputStream(
-                                new BufferedInputStream(client.getInputStream()));
-                        boolean done = false;
-                        while (!done) {
-                            String message = dis.readUTF();
-                            System.out.println("Received message from client " + client + ": " + message);
-
-                            // Send the message to all connected clients
-                            for (Socket c : clients) {
-                                if (c != client) {
-                                    DataOutputStream dos = new DataOutputStream(
-                                            new BufferedOutputStream(c.getOutputStream()));
-                                    dos.writeUTF("<username>: " + message);
-                                    dos.flush();
-                                }
-                            }
-
-                            done = message.equals("bye");
-                        }
-                        dis.close();
-                        client.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } finally {
-                        clients.remove(client);
-                        System.out.println("Client disconnected: " + client);
-                    }
-                });
-                thread.start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void broadcastMessage(String message, Client src) throws IOException {
+        for (Client c : clients)
+        {
+            if (src != null && c != src)
+                c.sendMessage(message);
+        }
+    }
+
+    public void removeClient(Client client) {
+        System.out.println("Client quit: " + client);
+        clients.remove(client);
     }
 }
