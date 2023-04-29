@@ -46,7 +46,7 @@ public class Server {
             u.username = username;
             u.password = hash(password, saltString);
             u.salt = saltString;
-            u.permission = 0;
+            u.permissions = 0;
             gson.toJson(u, user.class, writer);
             String hash = hash(password, u.salt);
             return Objects.requireNonNull(hash).equals(u.password);
@@ -117,6 +117,8 @@ public class Server {
         for (Client c : clients)
         {
             if (src != null && c != src)
+                c.sendMessage(message);
+            else if (src == null)
                 c.sendMessage(message);
         }
     }

@@ -1,6 +1,7 @@
 package com.owen2k6.chat.threads;
 
 import com.owen2k6.chat.Server;
+import com.owen2k6.chat.account.Permissions;
 import com.owen2k6.chat.account.user;
 
 import java.io.*;
@@ -18,8 +19,7 @@ public class Client extends Thread {
         this.server = server;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return socket.toString();
     }
 
@@ -81,6 +81,22 @@ public class Client extends Thread {
                                     continue;
                                 }
                                 sendMessage("You are: " + userInfo.username);
+                                continue;
+                            case "bcast":
+                                if (!loggedIn) {
+                                    sendMessage("You must be logged in to do this., use /login or /register");
+                                    continue;
+                                }
+                                if (!Permissions.hasPermission(userInfo.permissions, Permissions.GLOBAL_ANNOUNCE))
+                                {
+                                    sendMessage("No permission!");
+                                    continue;
+                                }
+                                if (parts.length < 2) {
+                                    sendMessage("Invalid command, usage: /bcast <message>");
+                                    continue;
+                                }
+                                server.broadcastMessage("=== " + message.substring(7) + "===", null);
                                 continue;
                         }
                     } else {

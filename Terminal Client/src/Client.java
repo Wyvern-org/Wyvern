@@ -36,8 +36,8 @@ public class Client {
                     boolean done = false;
                     while (!done) {
                         String message = dis.readUTF();
-                        System.out.println("Received message: " + message); // Debug statement
-                        done = message.equals("bye");
+                        System.out.println(message);
+                        done = message.equals("-> Server Stopping!");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -56,11 +56,12 @@ public class Client {
             Scanner scanner = new Scanner(System.in);
             boolean done = false;
             while (!done) {
+                System.out.print("> ");
                 String message = scanner.nextLine();
                 dos.writeUTF(message);
                 dos.flush();
-                System.out.println("Sent message: " + message); // Debug statement
-                done = message.equals("bye");
+                done = message.equals("/exit");
+
             }
 
             // Close the output stream and wait for the thread to finish
