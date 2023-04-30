@@ -3,6 +3,8 @@ package com.owen2k6.chat.threads;
 import com.owen2k6.chat.Server;
 import com.owen2k6.chat.account.Permissions;
 import com.owen2k6.chat.account.user;
+import com.owen2k6.chat.server.channels;
+import com.owen2k6.chat.server.servers;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,6 +15,9 @@ public class Client extends Thread {
     private Socket socket;
     private boolean loggedIn = false;
     private user userInfo;
+
+    public servers currentserver;
+    public channels currentchannel;
 
     public Client(Server server, Socket socket) {
         this.socket = socket;
@@ -80,15 +85,16 @@ public class Client extends Thread {
                                     sendMessage("You must be logged in to do this., use /login or /register");
                                     continue;
                                 }
-                                sendMessage("You are: " + userInfo.username);
+                                sendMessage("Username: " + userInfo.username);
+                                sendMessage("UUID: " + userInfo.uuid);
+                                sendMessage("Permissions: " + userInfo.permissions);
                                 continue;
                             case "bcast":
                                 if (!loggedIn) {
                                     sendMessage("You must be logged in to do this., use /login or /register");
                                     continue;
                                 }
-                                if (!Permissions.hasPermission(userInfo.permissions, Permissions.GLOBAL_ANNOUNCE))
-                                {
+                                if (!Permissions.hasPermission(userInfo.permissions, Permissions.GLOBAL_ANNOUNCE)) {
                                     sendMessage("No permission!");
                                     continue;
                                 }
@@ -97,6 +103,56 @@ public class Client extends Thread {
                                     continue;
                                 }
                                 server.broadcastMessage("=== " + message.substring(7) + "===", null);
+                                continue;
+                            case "stop":
+                                if (!loggedIn) {
+                                    sendMessage("You must be logged in to do this, use /login or /register");
+                                    continue;
+                                }
+                                if (!Permissions.hasPermission(userInfo.permissions, Permissions.STOP_SERVER)) {
+                                    sendMessage("No permission!");
+                                    continue;
+                                }
+                                if (parts.length > 1) {
+                                    sendMessage("Invalid command, usage: /stop");
+                                    continue;
+                                }
+                                done = true;
+                                server.broadcastMessage("-> Server Stopping!", null);
+                                System.exit(0);
+                                continue;
+                            case "new":
+                                if (parts.length < 2) {
+                                    sendMessage("Invalid command, usage: /new {sub-command}");
+                                    continue;
+                                }
+                                if (parts.length >= 2) {
+                                    if (parts[1].equals("server")) {
+                                        if (!loggedIn) {
+                                            sendMessage("You must be logged in to do this, use /login or /register");
+                                            continue;
+                                        }
+                                        if (parts.length < 3) {
+                                            sendMessage("Invalid command, usage: /new server {server name}");
+                                            continue;
+                                        }
+                                        server.makeServer(parts[2], this.userInfo.uuid);
+                                        continue;
+                                    }
+                                    if (parts[1].equals("group")) {
+                                        if (!loggedIn) {
+                                            sendMessage("You must be logged in to do this, use /login or /register");
+                                            continue;
+                                        }
+                                        if (parts.length < 3) {
+                                            sendMessage("Invalid command, usage: /new group {group name}");
+                                            continue;
+                                        }
+                                        // perms check ig if ()
+                                        
+                                    }
+                                }
+
                                 continue;
                         }
                     } else {
@@ -107,10 +163,9 @@ public class Client extends Thread {
                         System.out.println("Received message from client " + socket + ": " + message);
 
                         // Send the message to all connected clients
-                        server.broadcastMessage("<" + userInfo.username + "> " + message, this);
+                        server.broadcastMessage("<" + userInfo.username + "> " + message, null);
+                        //server.broadcastMessage("<" + userInfo.username + "> " + message, this);
                     }
-
-                    done = message.equals("bye");
                 }
                 dis.close();
                 socket.close();
