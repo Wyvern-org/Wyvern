@@ -34,6 +34,9 @@ public class Client extends Thread {
             try {
                 DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
                 DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                sendMessage("Welcome to wyvern!");
+                sendMessage("Please login or register with /login <username> <password> or /register <username> <password> <confirm password>");
+                sendMessage("You can use /whoami to see your username, uuid and permissions when logged in.");
                 boolean done = false;
                 while (!done) {
 
@@ -66,6 +69,11 @@ public class Client extends Thread {
                                     loggedIn = true;
                                     loadData(parts[1]);
                                     sendMessage("You are now logged in.");
+                                    try {
+                                        server.broadcastMessage(parts[1] + " is now online.", null);
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                 } else {
                                     sendMessage("Invalid username or password.");
                                 }
@@ -157,7 +165,6 @@ public class Client extends Thread {
                                             sendMessage("Invalid command, usage: /new group {group name}");
                                             continue;
                                         }
-                                        // perms check ig if ()
                                     }
                                 }
 
@@ -171,7 +178,7 @@ public class Client extends Thread {
                         System.out.println("Received message from client " + socket + ": " + message);
 
                         // Send the message to all connected clients
-                        server.broadcastMessage("<" + userInfo.username + "> " + message, null);
+                        server.broadcastMessage("<" + this.userInfo.username + "> " + message, null);
                         //server.broadcastMessage("<" + userInfo.username + "> " + message, this);
                     }
                 }
@@ -179,6 +186,11 @@ public class Client extends Thread {
                 socket.close();
             } catch (SocketException f) {
                 System.out.println("Client disconnected");
+                try {
+                    server.broadcastMessage(this.userInfo.username + " Has gone offline", null);
+                } catch (IOException e) {
+                    System.out.println("Client quit not logged in" );
+                }
                 server.removeClient(this);
                 try {
                     socket.close();

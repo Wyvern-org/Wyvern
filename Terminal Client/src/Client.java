@@ -1,4 +1,5 @@
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.Scanner;
 import javax.swing.*;
@@ -9,14 +10,27 @@ import java.awt.event.*;
 public class Client {
 
     private Socket socket;
-    private String host = "localhost";
+    private String host = "216.14.148.33";
     private int port = 5600;
 
     private JFrame frame;
+    private JFrame eframe; // hector
+    private JFrame aframe;
     private JTextArea textArea;
     private JTextField textField;
     private JScrollPane scrollPane;
     private JButton sendButton;
+    public boolean allowrun = false;
+    public boolean console = false;
+    public String reason = "";
+
+    private JTextField ipAddressField;
+    private JTextField portField;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+    private JButton loginButton;
+    private JButton registerButton;
+    private JLabel statusLabel;
 
 
     public void createAndShowGUI() {
@@ -26,7 +40,7 @@ public class Client {
         Color textColor = new Color(248, 248, 242);
 
         // Create the frame
-        frame = new JFrame("Client");
+        frame = new JFrame("Wyvern Alpha");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(800, 600)); // Set window size to 800x600
         frame.getContentPane().setBackground(darkGray);
@@ -89,27 +103,96 @@ public class Client {
         frame.setVisible(true);
     }
 
+    public void ConnectionDialog() {
+        eframe = new JFrame("Wyvern Alpha");
+        // Set up the GUI components
+        eframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        eframe.setSize(400, 200);
+        eframe.setLocationRelativeTo(null); // Center on screen
 
+        JLabel ipAddressLabel = new JLabel("Server IP Address:");
+        JLabel portLabel = new JLabel("Server Port Number:");
+        ipAddressField = new JTextField();
+        portField = new JTextField();
+
+        JButton connectButton = new JButton("Connect");
+        connectButton.addActionListener(e -> {
+            host = ipAddressField.getText().trim();
+            port = Integer.parseInt(portField.getText().trim());
+            allowrun = true;
+            try {
+                socket = new Socket(host, port);
+            } catch (IOException ex) {
+                allowrun = false;
+                reason = ex.getMessage();
+            }
+            start();
+            eframe.dispose();
+        });
+
+        // Add the components to the layout
+        JPanel panel = new JPanel();
+        GroupLayout layout = new GroupLayout(panel);
+        panel.setLayout(layout);
+
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup()
+                        .addComponent(ipAddressLabel)
+                        .addComponent(portLabel))
+                .addGroup(layout.createParallelGroup()
+                        .addComponent(ipAddressField)
+                        .addComponent(portField)
+                        .addComponent(connectButton))
+        );
+
+        layout.setVerticalGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(ipAddressLabel)
+                        .addComponent(ipAddressField))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(portLabel)
+                        .addComponent(portField))
+                .addComponent(connectButton)
+        );
+
+        eframe.getContentPane().add(panel);
+        eframe.pack();
+        eframe.setVisible(true);
+    }
 
 
     public Client() {
-        try {
-            socket = new Socket(host, port);
-            System.out.println("Connected to server: " + socket);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (console) {
+            System.out.println("Connecting to server...");
+        } else {
+            connect();
         }
+        //socket = new Socket(host, port); // Better call saul
+        //System.out.println("Connected to server: " + socket);
     }
 
     public static void main(String[] args) {
         Client client = new Client();
+        if (client.allowrun) {
+            if (args.length > 0 && args[0].equals("-console")) {
+                // Disable GUI and start in console-only mode
+                client.console = true;
+                client.startConsole();
+            } else {
+                // Enable GUI
+                client.console = false;
 
-        if (args.length > 0 && args[0].equals("-console")) {
-            // Disable GUI and start in console-only mode
-            client.startConsole();
+            }
         } else {
-            // Enable GUI
-            client.start();
+
+            if (args.length > 0 && args[0].equals("-console")) {
+                System.out.println("Failed to connect to server!");
+            } else {
+                //JOptionPane.showMessageDialog(null, "Failed to connect to server: " + client.reason, "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -149,7 +232,6 @@ public class Client {
     }
 
 
-
     public void sendMessage(String message) {
         try {
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
@@ -161,12 +243,40 @@ public class Client {
     }
 
     public void receiveMessage(String message) {
+        String formattedMessage = format(message); // Apply color formatting
         SwingUtilities.invokeLater(() -> {
             StringBuilder sb = new StringBuilder(textArea.getText());
-            sb.append(message).append("\n");
+            sb.append(formattedMessage).append("\n");
             textArea.setText(sb.toString());
         });
     }
+
+    public void connect() {
+        SwingUtilities.invokeLater(this::ConnectionDialog);
+    }
+
+
+    public static String format(String message) {
+        message = message.replaceAll("&0", "\u001b[30m"); // black
+        message = message.replaceAll("&1", "\u001b[34m"); // dark blue
+        message = message.replaceAll("&2", "\u001b[32m"); // dark green
+        message = message.replaceAll("&3", "\u001b[36m"); // dark aqua
+        message = message.replaceAll("&4", "\u001b[31m"); // dark red
+        message = message.replaceAll("&5", "\u001b[35m"); // dark purple
+        message = message.replaceAll("&6", "\u001b[33m"); // gold
+        message = message.replaceAll("&7", "\u001b[37m"); // gray
+        message = message.replaceAll("&8", "\u001b[30;1m"); // dark gray
+        message = message.replaceAll("&9", "\u001b[34;1m"); // blue
+        message = message.replaceAll("&a", "\u001b[32;1m"); // green
+        message = message.replaceAll("&b", "\u001b[36;1m"); // aqua
+        message = message.replaceAll("&c", "\u001b[31;1m"); // red
+        message = message.replaceAll("&d", "\u001b[35;1m"); // light purple
+        message = message.replaceAll("&e", "\u001b[33;1m"); // yellow
+        message = message.replaceAll("&f", "\u001b[37;1m"); // white
+        message = message.replaceAll("&r", "\u001b[0m"); // reset
+        return message;
+    }
+
 
     public void start() {
         SwingUtilities.invokeLater(this::createAndShowGUI);
