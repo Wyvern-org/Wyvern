@@ -6,6 +6,7 @@ import com.owen2k6.chat.account.user;
 import com.owen2k6.chat.server.channels;
 import com.owen2k6.chat.server.servers;
 
+import javax.print.DocFlavor;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
@@ -35,7 +36,15 @@ public class Client extends Thread {
                 DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
                 boolean done = false;
                 while (!done) {
-                    String message = dis.readUTF();
+
+                    String message = "";
+
+                    try {
+                        message = dis.readUTF();
+                    } catch (EOFException e) {
+                        //System.out.println("Client disconnected.");
+                        break;
+                    }
 
                     if (message.startsWith("/")) {
                         String[] parts = message.substring(1).split(" ");
@@ -149,7 +158,6 @@ public class Client extends Thread {
                                             continue;
                                         }
                                         // perms check ig if ()
-                                        e dot
                                     }
                                 }
 
@@ -157,7 +165,7 @@ public class Client extends Thread {
                         }
                     } else {
                         if (!loggedIn) {
-                            sendMessage("You must be logged in to send messages., use /login or /register");
+                            sendMessage("You must be logged in to send messages, use /login or /register");
                             continue;
                         }
                         System.out.println("Received message from client " + socket + ": " + message);
