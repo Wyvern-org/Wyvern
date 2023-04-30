@@ -10,6 +10,7 @@ import javax.print.DocFlavor;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.UUID;
 
 public class Client extends Thread {
     private Server server;
@@ -17,8 +18,8 @@ public class Client extends Thread {
     private boolean loggedIn = false;
     private user userInfo;
 
-    public servers currentserver;
-    public channels currentchannel;
+    public UUID currentserver;
+    public UUID currentchannel;
 
     public Client(Server server, Socket socket) {
         this.socket = socket;
