@@ -149,7 +149,7 @@ public class Client extends Thread {
                                             continue;
                                         }
                                         // perms check ig if ()
-                                        
+                                        e dot
                                     }
                                 }
 
