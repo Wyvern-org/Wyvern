@@ -5,10 +5,12 @@ import com.owen2k6.chat.server.servers;
 import com.owen2k6.chat.server.channels;
 import com.owen2k6.chat.server.groups;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class network {
-    public List<channels> channels;
-    public List<servers> servers;
-    public List<groups> groups;
+    public ArrayList<channels> channels;
+    public ArrayList<servers> servers;
+    public ArrayList<groups> groups;
 }

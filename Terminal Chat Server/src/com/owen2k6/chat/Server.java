@@ -25,9 +25,9 @@ public class Server {
     private int port = 5600;
     private List<Client> clients;
 
-    public List<servers> servers;
-    public List<channels> channels;
-    public List<groups> groups;
+    public ArrayList<servers> servers;
+    public ArrayList<channels> channels;
+    public ArrayList<groups> groups;
 
 
     public Gson gson = new Gson();

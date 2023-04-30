@@ -18,8 +18,8 @@ public class Client extends Thread {
     private boolean loggedIn = false;
     private user userInfo;
 
-    public UUID currentserver;
-    public UUID currentchannel;
+    public servers currentserver;
+    public channels currentchannel;
 
     public Client(Server server, Socket socket) {
         this.socket = socket;
