@@ -5,6 +5,7 @@ import com.owen2k6.chat.account.Permissions;
 import com.owen2k6.chat.account.user;
 import com.owen2k6.chat.server.channels;
 import com.owen2k6.chat.server.servers;
+import com.owen2k6.chat.Server;
 
 import javax.print.DocFlavor;
 import java.io.*;
@@ -35,7 +36,7 @@ public class Client extends Thread {
             try {
                 DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
                 DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-                sendMessage("Welcome to wyvern!");
+                sendMessage("Welcome");
                 sendMessage("Please login or register with /login <username> <password> or /register <username> <password> <confirm password>");
                 sendMessage("You can use /whoami to see your username, uuid and permissions when logged in.");
                 boolean done = false;
@@ -70,6 +71,7 @@ public class Client extends Thread {
                                     loggedIn = true;
                                     loadData(parts[1]);
                                     sendMessage("You are now logged in.");
+                                    Server.onlineUsers.add(parts[1]);
                                     try {
                                         server.broadcastMessage(parts[1] + " is now online.", null);
                                     } catch (IOException e) {
@@ -170,6 +172,13 @@ public class Client extends Thread {
                                 }
 
                                 continue;
+                            case "list":
+                                sendMessage("Currently online members: ");
+                                for (String username:Server.onlineUsers) {
+                                    sendMessage(username);
+                                }
+                                continue;
+
                         }
                     } else {
                         if (!loggedIn) {
@@ -188,11 +197,14 @@ public class Client extends Thread {
             } catch (SocketException f) {
                 System.out.println("Client disconnected");
                 try {
-                    server.broadcastMessage(this.userInfo.username + " Has gone offline", null);
+                    String username = this.userInfo.username;
+                    server.removeClient(this);
+                    server.broadcastMessage(username + " Has gone offline", null);
+                    Server.onlineUsers.removeIf(s -> s.equals(username));
                 } catch (IOException e) {
                     System.out.println("Client quit not logged in" );
                 }
-                server.removeClient(this);
+                //server.removeClient(this);
                 try {
                     socket.close();
                 } catch (IOException e) {

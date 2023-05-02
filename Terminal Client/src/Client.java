@@ -10,7 +10,7 @@ import java.awt.event.*;
 public class Client {
 
     private Socket socket;
-    private String host = "216.14.148.33";
+    private String host = "";
     private int port = 5600;
 
     private JFrame frame;

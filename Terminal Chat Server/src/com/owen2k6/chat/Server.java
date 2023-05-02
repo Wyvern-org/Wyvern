@@ -28,8 +28,7 @@ public class Server {
     public ArrayList<servers> servers;
     public ArrayList<channels> channels;
     public ArrayList<groups> groups;
-
-
+    public static ArrayList<String> onlineUsers = new ArrayList<String>();
     public Gson gson = new Gson();
 
     public byte[] generateSalt(int length) {
