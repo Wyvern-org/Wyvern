@@ -185,7 +185,7 @@ public class Client extends Thread {
                             sendMessage("You must be logged in to send messages, use /login or /register");
                             continue;
                         }
-                        System.out.println("Received message from client " + socket + ": " + message);
+                        System.out.println("Received message from client (" + this.userInfo.username + ") " + socket + ": " + message);
 
                         // Send the message to all connected clients
                         server.broadcastMessage("<" + this.userInfo.username + "> " + message, null);
@@ -201,7 +201,7 @@ public class Client extends Thread {
                     server.removeClient(this);
                     server.broadcastMessage(username + " Has gone offline", null);
                     Server.onlineUsers.removeIf(s -> s.equals(username));
-                } catch (IOException e) {
+                } catch (Exception e) {
                     System.out.println("Client quit not logged in" );
                 }
                 //server.removeClient(this);
