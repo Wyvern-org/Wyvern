@@ -297,6 +297,26 @@ public class Server {
         }
     }
 
+    public void broadcastMembersList(Client src) throws IOException {
+        String message = "{OnlineList ";
+        for (String username:Server.onlineUsers) {
+            message = message + username + "\n";
+        }
+
+        for (Client c : clients) {
+            try {
+                if (src != null && c != src && Objects.equals(src.currentchannel.id, null) && Objects.equals(src.currentserver.id, null))
+                    c.sendMessage(message);
+                else if (src == null)
+                    c.sendMessage(message);
+            } catch (Exception e) {
+
+            }
+
+        }
+
+    }
+
     public void broadcastMessageToChannel(String message, Client src, channels channel, servers serv) throws
             IOException {
         for (Client c : clients) {

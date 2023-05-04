@@ -21,6 +21,8 @@ public class Client extends Thread {
 
     public servers currentserver;
     public channels currentchannel;
+    public String bupUsername;
+    public Client bupClient;
 
     public Client(Server server, Socket socket) {
         this.socket = socket;
@@ -72,8 +74,11 @@ public class Client extends Thread {
                                     loadData(parts[1]);
                                     sendMessage("You are now logged in.");
                                     Server.onlineUsers.add(parts[1]);
+                                    bupUsername = this.userInfo.username;
+                                    bupClient = this;
                                     try {
                                         server.broadcastMessage(parts[1] + " is now online.", null);
+                                        server.broadcastMembersList(null);
                                     } catch (IOException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -100,9 +105,24 @@ public class Client extends Thread {
                                 server.register(parts[1], parts[2]);
                                 sendMessage("You are now registered, please login with /login <username> <password>.");
                                 continue;
+                            case "logout":
+                                if (!loggedIn) {
+                                    sendMessage("You must be logged in to do this, use /login or /register");
+                                    continue;
+                                }
+                                if (loggedIn) {
+                                    String username = this.userInfo.username;
+                                    server.broadcastMessage(username + " Has gone offline", null);
+                                    Server.onlineUsers.removeIf(s -> s.equals(username));
+                                    server.broadcastMembersList(null);
+                                    loggedIn = false;
+                                }
+                             continue;
+
+
                             case "whoami":
                                 if (!loggedIn) {
-                                    sendMessage("You must be logged in to do this., use /login or /register");
+                                    sendMessage("You must be logged in to do this, use /login or /register");
                                     continue;
                                 }
                                 sendMessage("Username: " + userInfo.username);
@@ -111,7 +131,7 @@ public class Client extends Thread {
                                 continue;
                             case "bcast":
                                 if (!loggedIn) {
-                                    sendMessage("You must be logged in to do this., use /login or /register");
+                                    sendMessage("You must be logged in to do this, use /login or /register");
                                     continue;
                                 }
                                 if (!Permissions.hasPermission(userInfo.permissions, Permissions.GLOBAL_ANNOUNCE)) {
@@ -201,8 +221,19 @@ public class Client extends Thread {
                     server.removeClient(this);
                     server.broadcastMessage(username + " Has gone offline", null);
                     Server.onlineUsers.removeIf(s -> s.equals(username));
+                    server.broadcastMembersList(null);
                 } catch (Exception e) {
-                    System.out.println("Client unexpectedly disconnected");
+                    try {
+                        server.removeClient(bupClient);
+                        server.broadcastMessage(bupUsername + " Has gone offline", null);
+                        Server.onlineUsers.removeIf(s -> s.equals(bupUsername));
+                        server.broadcastMembersList(null);
+
+                        System.out.println("Client unexpectedly disconnected.");
+                    } catch (Exception ea) {
+                        System.out.println("Client unexpectedly disconnected and the server has failed to remove user from list. " + ea);
+                    }
+
                 }
                 //server.removeClient(this);
                 try {

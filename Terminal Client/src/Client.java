@@ -17,6 +17,7 @@ public class Client {
     private JFrame eframe; // hector
     private JFrame aframe;
     private JTextArea textArea;
+    private JTextArea onlineList;
     private JTextField textField;
     private JScrollPane scrollPane;
     private JButton sendButton;
@@ -52,8 +53,19 @@ public class Client {
         textArea.setBackground(lightGray); // Set background color of text area
         textArea.setForeground(textColor); // Set text color of text area
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 16)); // Set font of text field
+        textArea.setLineWrap(true); // Enable line wrapping
+        textArea.setWrapStyleWord(true); // Enable word wrapping
         scrollPane = new JScrollPane(textArea);
         frame.add(scrollPane, BorderLayout.CENTER);
+
+        onlineList = new JTextArea();
+        onlineList.setEditable(false);
+        onlineList.setBackground(lightGray); // Set background color of text area
+        onlineList.setForeground(textColor); // Set text color of text area
+        onlineList.setFont(new Font("Monospaced", Font.PLAIN, 16)); // Set font of text field
+        scrollPane = new JScrollPane(onlineList);
+        scrollPane.setPreferredSize(new Dimension(200, 600)); // Set the preferred size of the scroll pane
+        frame.add(scrollPane, BorderLayout.LINE_END);
 
         // Create the panel for the text field and send button
         JPanel inputPanel = new JPanel(new BorderLayout());
@@ -243,12 +255,28 @@ public class Client {
     }
 
     public void receiveMessage(String message) {
-        String formattedMessage = format(message); // Apply color formatting
-        SwingUtilities.invokeLater(() -> {
-            StringBuilder sb = new StringBuilder(textArea.getText());
-            sb.append(formattedMessage).append("\n");
-            textArea.setText(sb.toString());
-        });
+        //System.out.println(message);
+        if (!message.startsWith("{")) {
+            String formattedMessage = format(message); // Apply color formatting
+            SwingUtilities.invokeLater(() -> {
+                StringBuilder sb = new StringBuilder(textArea.getText());
+                sb.append(formattedMessage).append("\n");
+                textArea.setText(sb.toString());
+            });
+        }
+        else {
+            if (message.startsWith("{OnlineList")) {
+                String msgsplit = message.split(" ")[1];
+
+                String formattedMessage = format(msgsplit); // Apply color formatting
+                SwingUtilities.invokeLater(() -> {
+                    onlineList.setText("");
+                    StringBuilder sb = new StringBuilder(onlineList.getText());
+                    sb.append(formattedMessage).append("\n");
+                    onlineList.setText(sb.toString());
+                });
+            }
+        }
     }
 
     public void connect() {
