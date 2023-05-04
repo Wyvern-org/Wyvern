@@ -195,14 +195,14 @@ public class Client extends Thread {
                 dis.close();
                 socket.close();
             } catch (SocketException f) {
-                System.out.println("Client disconnected");
+                //System.out.println("Client disconnected");
                 try {
                     String username = this.userInfo.username;
                     server.removeClient(this);
                     server.broadcastMessage(username + " Has gone offline", null);
                     Server.onlineUsers.removeIf(s -> s.equals(username));
                 } catch (Exception e) {
-                    System.out.println("Client quit not logged in" );
+                    System.out.println("Client unexpectedly disconnected");
                 }
                 //server.removeClient(this);
                 try {
