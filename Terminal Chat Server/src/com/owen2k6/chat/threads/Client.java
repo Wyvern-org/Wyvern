@@ -224,10 +224,10 @@ public class Client extends Thread {
                     server.broadcastMembersList(null);
                 } catch (Exception e) {
                     try {
-                        server.removeClient(bupClient);
-                        server.broadcastMessage(bupUsername + " Has gone offline", null);
+                        //server.removeClient(bupClient);
+                        // TODO: fix this line  server.broadcastMessage(bupUsername + " Has gone offline", null);
                         Server.onlineUsers.removeIf(s -> s.equals(bupUsername));
-                        server.broadcastMembersList(null);
+                        // TODO: fix this line  server.broadcastMembersList(null);
 
                         System.out.println("Client unexpectedly disconnected.");
                     } catch (Exception ea) {
