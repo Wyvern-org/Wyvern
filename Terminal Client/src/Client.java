@@ -119,20 +119,30 @@ public class Client {
         eframe = new JFrame("Wyvern Alpha");
         // Set up the GUI components
         eframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        eframe.setSize(400, 200);
+        eframe.setSize(400, 300);
         eframe.setLocationRelativeTo(null); // Center on screen
-
-        JLabel ipAddressLabel = new JLabel("Server IP Address:");
-        JLabel portLabel = new JLabel("Server Port Number:");
+        JLabel david = new JLabel("Leave blank to connect to Wyvern");
+        JLabel ipAddressLabel = new JLabel("Custom IP Address:");
+        JLabel portLabel = new JLabel("Custom Port Number:");
         ipAddressField = new JTextField();
         portField = new JTextField();
 
         JButton connectButton = new JButton("Connect");
         connectButton.addActionListener(e -> {
             host = ipAddressField.getText().trim();
-            port = Integer.parseInt(portField.getText().trim());
+            try {
+                port = Integer.parseInt(portField.getText().trim());
+            } catch (IllegalArgumentException f){
+                //ignore
+                port = 5600;
+            }
             allowrun = true;
             try {
+                if (portField.getText().isEmpty())
+                    port = 5600;
+                if (ipAddressField.getText().isEmpty())
+                    host = "127.0.0.1";
+
                 socket = new Socket(host, port);
             } catch (IOException ex) {
                 allowrun = false;

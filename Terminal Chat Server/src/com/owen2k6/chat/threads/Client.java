@@ -12,6 +12,7 @@ import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.UUID;
+import com.owen2k6.chat.configuration.motd;
 
 public class Client extends Thread {
     private Server server;
@@ -38,9 +39,7 @@ public class Client extends Thread {
             try {
                 DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
                 DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-                sendMessage("Welcome");
-                sendMessage("Please login or register with /login <username> <password> or /register <username> <password> <confirm password>");
-                sendMessage("You can use /whoami to see your username, uuid and permissions when logged in.");
+                sendMessage(motd.getMOTD());
                 boolean done = false;
                 while (!done) {
 

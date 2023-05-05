@@ -18,6 +18,8 @@ import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import com.owen2k6.chat.network.messageoftheday;
+import com.owen2k6.chat.configuration.motd;
 
 public class Server {
 
@@ -236,6 +238,7 @@ public class Server {
         String filername = "data/settings/network.json";
         File file = new File(filename);
         File filer = new File(filername);
+        motd.load();
         if (!file.exists() || !filer.exists()) {
             // Try to create the directory
             try {
