@@ -16,6 +16,7 @@ public class ChatHandler implements PacketHandler
 
         try
         {
+            System.out.println("Received message through ChatHandler: " + chat.getMessage());
             ChatEvent chatEvent = new ChatEvent(client, chat.getMessage());
             Server.EVENT_SYSTEM.fireEvent("chat", chatEvent);
             if (chatEvent.isCancelled())

@@ -14,6 +14,7 @@ public class ChatHandler implements PacketHandler
 
         try
         {
+            System.out.println("Received message through ChatHandler: " + chat.getMessage());
             client.receiveMessage(chat.getMessage());
         } catch (Exception ex) {
             ex.printStackTrace();

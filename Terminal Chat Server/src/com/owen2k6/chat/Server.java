@@ -5,6 +5,11 @@ import com.owen2k6.chat.account.user;
 import com.owen2k6.chat.commands.CommandProcessor;
 import com.owen2k6.chat.event.ChatEvent;
 import com.owen2k6.chat.event.EventSystem;
+import com.owen2k6.chat.network.redux.PacketRegistry;
+import com.owen2k6.chat.network.redux.handlers.ChatHandler;
+import com.owen2k6.chat.network.redux.handlers.HandshakeHandler;
+import com.owen2k6.chat.network.redux.packets.Packet0Handshake;
+import com.owen2k6.chat.network.redux.packets.Packet1Chat;
 import com.owen2k6.chat.server.channels;
 import com.owen2k6.chat.server.servers;
 import com.owen2k6.chat.server.groups;
@@ -289,6 +294,12 @@ public class Server {
                     e.printStackTrace();
                 }
             }
+
+            PacketRegistry.registerPacket(0, Packet0Handshake.class);
+            PacketRegistry.registerPacketHandler(0, HandshakeHandler.class);
+
+            PacketRegistry.registerPacket(1, Packet1Chat.class);
+            PacketRegistry.registerPacketHandler(1, ChatHandler.class);
 
             while (true) {
                 try {

@@ -75,6 +75,7 @@ public class ClientRedux extends Thread
     {
         dos.writeInt(packet.getPacketID());
         packet.writeData(dos);
+        dos.flush();
     }
 
     public void disconnect() throws IOException

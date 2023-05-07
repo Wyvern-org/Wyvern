@@ -406,12 +406,19 @@ public class Client {
 
     public void sendMessage(String message) {
         try {
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-            dos.writeUTF(message);
-            dos.flush();
+            Packet1Chat chat = new Packet1Chat(message);
+            sendPacket(chat);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendPacket(AbstractPacket packet) throws IOException
+    {
+        DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+        dos.writeInt(packet.getPacketID());
+        packet.writeData(dos);
+        dos.flush();
     }
 
     public void receiveMessage(String message) {
