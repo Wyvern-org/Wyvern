@@ -52,7 +52,8 @@ public class ClientRedux extends Thread
                     if (packet instanceof Packet1Chat)
                     {
                         Packet1Chat chat = (Packet1Chat) packet;
-                        Server.getInstance().commandProcessor.processCommand(this, chat.getMessage());
+                        if (chat.getMessage().startsWith("/"))
+                            Server.getInstance().commandProcessor.processCommand(this, chat.getMessage());
                     }
 
                     PacketHandler packetHandler = PacketRegistry.getPacketHandler(packetID).newInstance();

@@ -317,9 +317,9 @@ public class Server {
         }
     }
 
-    public void broadcastMessage(String message, Client src) throws IOException {
-        for (Client c : clients) {
-            if (src != null && c != src && Objects.equals(src.currentchannel.id, null) && Objects.equals(src.currentserver.id, null))
+    public void broadcastMessage(String message, ClientRedux src) throws IOException {
+        for (ClientRedux c : reduxClients) {
+            if (src != null && c != src)
                 c.sendMessage(message);
             else if (src == null)
                 c.sendMessage(message);
