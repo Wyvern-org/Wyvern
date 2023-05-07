@@ -2,6 +2,7 @@ package com.owen2k6.chat;
 
 import com.google.gson.Gson;
 import com.owen2k6.chat.account.user;
+import com.owen2k6.chat.event.EventSystem;
 import com.owen2k6.chat.server.channels;
 import com.owen2k6.chat.server.servers;
 import com.owen2k6.chat.server.groups;
@@ -22,6 +23,12 @@ import com.owen2k6.chat.network.messageoftheday;
 import com.owen2k6.chat.configuration.motd;
 
 public class Server {
+    public static EventSystem EVENT_SYSTEM = new EventSystem();
+    private static Server singleton;
+    public static Server getInstance()
+    {
+        return singleton;
+    }
 
     private ServerSocket server;
     private int port = 5600;

@@ -18,7 +18,7 @@ public class Client extends Thread {
     private Server server;
     private Socket socket;
     private boolean loggedIn = false;
-    private user userInfo;
+    public user userInfo;
 
     public servers currentserver;
     public channels currentchannel;
@@ -262,7 +262,8 @@ public class Client extends Thread {
         return userInfo;
     }
 
-    public void sendMessage(String message) throws IOException {
+    public void sendMessage(String message) throws IOException
+    {
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         dos.writeUTF(message);
         dos.flush();

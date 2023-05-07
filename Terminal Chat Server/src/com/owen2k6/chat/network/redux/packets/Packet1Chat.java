@@ -32,4 +32,9 @@ public class Packet1Chat extends AbstractPacket
     {
         dos.writeUTF(message);
     }
+
+    public String getMessage()
+    {
+        return message;
+    }
 }
