@@ -57,6 +57,8 @@ public class ClientRedux extends Thread
                             Server.getInstance().commandProcessor.processCommand(this, chat.getMessage());
                             continue;
                         }
+
+                        if (!loggedIn) continue; // discard chats while not logged in
                     }
 
                     PacketHandler packetHandler = PacketRegistry.getPacketHandler(packetID).newInstance();
