@@ -3,6 +3,7 @@ package com.owen2k6.chat;
 import com.google.gson.Gson;
 import com.owen2k6.chat.account.user;
 import com.owen2k6.chat.commands.CommandProcessor;
+import com.owen2k6.chat.commands.Login;
 import com.owen2k6.chat.event.ChatEvent;
 import com.owen2k6.chat.event.EventSystem;
 import com.owen2k6.chat.network.redux.PacketRegistry;
@@ -301,6 +302,8 @@ public class Server {
 
             PacketRegistry.registerPacket(1, Packet1Chat.class);
             PacketRegistry.registerPacketHandler(1, ChatHandler.class);
+
+            commandProcessor.registerHandler("login", Login.class);
 
             while (true) {
                 try {
