@@ -222,6 +222,10 @@ public class Client {
             if (allowrun) {
                 eframe.dispose();
                 start();
+                JOptionPane.showMessageDialog(null, "Please keep in mind that this is an open testing phase.\n" +
+                        "We are not yet ready for a full userbase to register yet\n" +
+                        "Please report all bugs found!\n" +
+                        "Enjoy the testing phase of Wyvern Chat!", "Welcome to Wyvern", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 eframe.dispose();
                 ConnectionDialog();
@@ -348,10 +352,7 @@ public class Client {
             if (args.length > 0 && args[0].equals("-console")) {
                 System.out.println("Wyvern Console is deprecated! You are unable to launch this in a release enviorment.");
             } else {
-                JOptionPane.showMessageDialog(null, "Please keep in mind that this is an open testing phase.\n" +
-                        "We are not yet ready for a full userbase to register yet\n" +
-                        "Please report all bugs found!\n" +
-                        "Enjoy the testing phase of Wyvern Chat!", "Welcome to Wyvern", JOptionPane.INFORMATION_MESSAGE);
+
             }
         }
     }
