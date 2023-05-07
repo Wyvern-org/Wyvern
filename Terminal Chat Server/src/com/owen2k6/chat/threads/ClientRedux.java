@@ -100,8 +100,19 @@ public class ClientRedux extends Thread
         loggedIn = flag;
     }
 
+    public boolean getLoggedIn()
+    {
+        return loggedIn;
+    }
+
     public String toString()
     {
         return socket.toString();
+    }
+
+    public void loadData(String username) throws IOException {
+        try (FileReader reader = new FileReader("data/users/" + username + ".json")) {
+            userInfo = server.gson.fromJson(reader, user.class);
+        }
     }
 }
