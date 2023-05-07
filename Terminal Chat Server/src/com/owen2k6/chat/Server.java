@@ -235,6 +235,7 @@ public class Server {
     }
 
     public Server() {
+        singleton = this;
         clients = new ArrayList<>();
         reduxClients = new ArrayList<>();
         try {
