@@ -10,7 +10,7 @@ import java.awt.event.*;
 public class Client {
 
     private Socket socket;
-    private String host = "";
+    private String host = "dev.wyvern.owen2k6.com";
     private int port = 5600;
 
     private JFrame frame;
@@ -141,7 +141,7 @@ public class Client {
                 if (portField.getText().isEmpty())
                     port = 5600;
                 if (ipAddressField.getText().isEmpty())
-                    host = "127.0.0.1";
+                    host = "dev.wyvern.owen2k6.com";
 
                 socket = new Socket(host, port);
             } catch (IOException ex) {
