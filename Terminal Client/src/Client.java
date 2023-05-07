@@ -64,7 +64,7 @@ public class Client {
         aboutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(frame, "Wyvern Chat\n" +
-                        "Version: " + version +"\n" +
+                        "Version: " + version + "\n" +
                         "Protocol: " + protocol + "\n" +
                         "Host: " + host + "\n" +
                         "Port: " + port + "\n" +
@@ -74,25 +74,34 @@ public class Client {
             }
         });
         //endregion
-        // region Log In Button
-        JButton loginButton = new JButton("Log in");
-        loginButton.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        loginButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                LoginPrompt();
-            }
-        });
-        //endregion
-        // region Log Out Button
-        JButton logoutButton = new JButton("Log Out");
-        logoutButton.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        logoutButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                sendMessage("/logout");
 
+        JComboBox<String> usera = new JComboBox<>();
+        usera.setRenderer(new ComboBoxButtonRenderer());
+        usera.setMaximumSize(new Dimension(100, 30));
+        usera.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        usera.addItem("---User---");
+        usera.addItem("Log In");
+        usera.addItem("Log Out");
+        usera.addItem("Register");
+
+        usera.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (Objects.equals(usera.getSelectedItem(), "User")) {
+                    //do nothing
+                }
+                else if (Objects.equals(usera.getSelectedItem(), "Log In")) {
+                    LoginPrompt();
+                    usera.setSelectedIndex(0);
+                } else if (Objects.equals(usera.getSelectedItem(), "Log Out")) {
+                    sendMessage("/logout");
+                    usera.setSelectedIndex(0);
+                } else if (Objects.equals(usera.getSelectedItem(), "Register")) {
+                    //RegisterPrompt();
+                    usera.setSelectedIndex(0);
+                }
+                usera.setSelectedIndex(0);
             }
         });
-        //endregion
 
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
@@ -100,8 +109,7 @@ public class Client {
         toolBar.setBorder(BorderFactory.createEmptyBorder());
         toolBar.setPreferredSize(new Dimension(toolBar.getPreferredSize().width, 17));
         toolBar.add(aboutButton);
-        toolBar.add(loginButton);
-        toolBar.add(logoutButton);
+        toolBar.add(usera);
 
         // Add the toolbar to the top of the panel
         frame.add(toolBar, BorderLayout.PAGE_START);
@@ -191,7 +199,7 @@ public class Client {
             host = ipAddressField.getText().trim();
             try {
                 port = Integer.parseInt(portField.getText().trim());
-            } catch (IllegalArgumentException f){
+            } catch (IllegalArgumentException f) {
                 //ignore
                 port = 5600;
             }
@@ -205,7 +213,7 @@ public class Client {
                 socket = new Socket(host, port);
             } catch (IOException ex) {
                 allowrun = false;
-                if (port == wyvernP && Objects.equals(host, wyvernH)){
+                if (port == wyvernP && Objects.equals(host, wyvernH)) {
                     JOptionPane.showMessageDialog(null, "The Wyvern servers are currently unavailable at this time.\n" + ex.getMessage() + "\nPlease try again later.", "Alert!", JOptionPane.ERROR_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "Failed to connect to server: \n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -256,25 +264,24 @@ public class Client {
         eframe.pack();
         eframe.setVisible(true);
     }
+
     public void LoginPrompt() {
-
-        //TODO: This is broken
-
-
         aframe = new JFrame("Wyvern Chat Pop-Out");
         // Set up the GUI components
-        aframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        aframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         aframe.setSize(400, 300);
+        aframe.setPreferredSize(new Dimension(400, 150));
         aframe.setLocationRelativeTo(null); // Center on screen
         JLabel bbbbbb = new JLabel("Login to Wyvern Chat!");
         JLabel aaaaaa = new JLabel("Username:");
         JLabel cccccc = new JLabel("Password:");
         usernameField = new JTextField();
-        passwordField = new JPasswordField ();
+        passwordField = new JPasswordField();
 
         JButton ohyeah = new JButton("Login");
         ohyeah.addActionListener(e -> {
             sendMessage("/login " + usernameField.getText().trim() + " " + passwordField.getText().trim());
+            aframe.dispose();
         });
 
         // Add the components to the layout
@@ -292,7 +299,7 @@ public class Client {
                                 .addComponent(aaaaaa)
                                 .addComponent(usernameField))
                         .addGroup(aslayout.createSequentialGroup()
-                                .addComponent(bbbbbb)
+                                .addComponent(cccccc)
                                 .addComponent(passwordField))
                         .addComponent(ohyeah))
         );
@@ -406,8 +413,7 @@ public class Client {
                 sb.append(formattedMessage).append("\n");
                 textArea.setText(sb.toString());
             });
-        }
-        else {
+        } else {
             if (message.startsWith("{OnlineList")) {
                 String msgsplit = message.split(" ")[1];
 
@@ -481,4 +487,25 @@ public class Client {
     }
 
 
+}
+
+class ComboBoxButtonRenderer extends JButton implements ListCellRenderer<String> {
+
+    public ComboBoxButtonRenderer() {
+        setOpaque(true);
+        setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        setBorderPainted(false);
+    }
+
+    @Override
+    public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
+        setText(value);
+        setBackground(isSelected ? Color.LIGHT_GRAY : Color.WHITE);
+        setForeground(isSelected ? Color.WHITE : Color.BLACK);
+        setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY),
+                BorderFactory.createEmptyBorder(0, 0, 0, 0)
+        ));
+        return this;
+    }
 }
