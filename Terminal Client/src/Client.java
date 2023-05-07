@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.util.Objects;
 import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
@@ -9,9 +10,20 @@ import java.awt.event.*;
 
 public class Client {
 
+    //TODO: Protocols
+    public int protocol = 1;
+    public float version = 0.01f;
+
+    //TODO: mod man this for you ;)
+
+
     private Socket socket;
-    private String host = "dev.wyvern.owen2k6.com";
-    private int port = 5600;
+    private String host = "dev.wyvern.owen2k6.com"; //initialised as a nullsafe.
+    private String username = "";
+    private String password = "";
+    private String wyvernH = "dev.wyvern.owen2k6.com";
+    private int port = 5600; // initialised as a nullsafe.
+    private int wyvernP = 5600;
 
     private JFrame frame;
     private JFrame eframe; // hector
@@ -41,11 +53,58 @@ public class Client {
         Color textColor = new Color(248, 248, 242);
 
         // Create the frame
-        frame = new JFrame("Wyvern Alpha");
+        frame = new JFrame("Wyvern Alpha - Welcome to Wyvern Chat!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(800, 600)); // Set window size to 800x600
         frame.getContentPane().setBackground(darkGray);
         frame.setLayout(new BorderLayout());
+        //region About Button
+        JButton aboutButton = new JButton("About");
+        aboutButton.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        aboutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "Wyvern Chat\n" +
+                        "Version: " + version +"\n" +
+                        "Protocol: " + protocol + "\n" +
+                        "Host: " + host + "\n" +
+                        "Port: " + port + "\n" +
+                        "Thank you for using Wyvern Chat! \n\n" +
+                        "Protected under the Owen2k6 Open Sourced Licence\n" +
+                        "https://github.com/wyvern-org/wyvern-alpha", "About", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        //endregion
+        // region Log In Button
+        JButton loginButton = new JButton("Log in");
+        loginButton.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                LoginPrompt();
+            }
+        });
+        //endregion
+        // region Log Out Button
+        JButton logoutButton = new JButton("Log Out");
+        logoutButton.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        logoutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                sendMessage("/logout");
+
+            }
+        });
+        //endregion
+
+        JToolBar toolBar = new JToolBar();
+        toolBar.setFloatable(false);
+        toolBar.setBackground(darkGray);
+        toolBar.setBorder(BorderFactory.createEmptyBorder());
+        toolBar.setPreferredSize(new Dimension(toolBar.getPreferredSize().width, 17));
+        toolBar.add(aboutButton);
+        toolBar.add(loginButton);
+        toolBar.add(logoutButton);
+
+        // Add the toolbar to the top of the panel
+        frame.add(toolBar, BorderLayout.PAGE_START);
 
         // Create the text area and add it to the frame
         textArea = new JTextArea();
@@ -116,7 +175,7 @@ public class Client {
     }
 
     public void ConnectionDialog() {
-        eframe = new JFrame("Wyvern Alpha");
+        eframe = new JFrame("Wyvern Chat - Alpha Test Client");
         // Set up the GUI components
         eframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         eframe.setSize(400, 300);
@@ -139,16 +198,26 @@ public class Client {
             allowrun = true;
             try {
                 if (portField.getText().isEmpty())
-                    port = 5600;
+                    port = wyvernP;
                 if (ipAddressField.getText().isEmpty())
-                    host = "dev.wyvern.owen2k6.com";
+                    host = wyvernH;
 
                 socket = new Socket(host, port);
             } catch (IOException ex) {
                 allowrun = false;
-                reason = ex.getMessage();
+                if (port == wyvernP && Objects.equals(host, wyvernH)){
+                    JOptionPane.showMessageDialog(null, "The Wyvern servers are currently unavailable at this time.\n" + ex.getMessage() + "\nPlease try again later.", "Alert!", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Failed to connect to server: \n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
-            start();
+            if (allowrun) {
+                eframe.dispose();
+                start();
+            } else {
+                eframe.dispose();
+                ConnectionDialog();
+            }
             eframe.dispose();
         });
 
@@ -162,15 +231,18 @@ public class Client {
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup()
-                        .addComponent(ipAddressLabel)
-                        .addComponent(portLabel))
-                .addGroup(layout.createParallelGroup()
-                        .addComponent(ipAddressField)
-                        .addComponent(portField)
+                        .addComponent(david)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(ipAddressLabel)
+                                .addComponent(ipAddressField))
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(portLabel)
+                                .addComponent(portField))
                         .addComponent(connectButton))
         );
 
         layout.setVerticalGroup(layout.createSequentialGroup()
+                .addComponent(david)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(ipAddressLabel)
                         .addComponent(ipAddressField))
@@ -183,6 +255,62 @@ public class Client {
         eframe.getContentPane().add(panel);
         eframe.pack();
         eframe.setVisible(true);
+    }
+    public void LoginPrompt() {
+
+        //TODO: This is broken
+
+
+        aframe = new JFrame("Wyvern Chat Pop-Out");
+        // Set up the GUI components
+        aframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        aframe.setSize(400, 300);
+        aframe.setLocationRelativeTo(null); // Center on screen
+        JLabel bbbbbb = new JLabel("Login to Wyvern Chat!");
+        JLabel aaaaaa = new JLabel("Username:");
+        JLabel cccccc = new JLabel("Password:");
+        usernameField = new JTextField();
+        passwordField = new JPasswordField ();
+
+        JButton ohyeah = new JButton("Login");
+        ohyeah.addActionListener(e -> {
+            sendMessage("/login " + usernameField.getText().trim() + " " + passwordField.getText().trim());
+        });
+
+        // Add the components to the layout
+        JPanel aspanel = new JPanel();
+        GroupLayout aslayout = new GroupLayout(aspanel);
+        aspanel.setLayout(aslayout);
+
+        aslayout.setAutoCreateGaps(true);
+        aslayout.setAutoCreateContainerGaps(true);
+
+        aslayout.setHorizontalGroup(aslayout.createSequentialGroup()
+                .addGroup(aslayout.createParallelGroup()
+                        .addComponent(bbbbbb)
+                        .addGroup(aslayout.createSequentialGroup()
+                                .addComponent(aaaaaa)
+                                .addComponent(usernameField))
+                        .addGroup(aslayout.createSequentialGroup()
+                                .addComponent(bbbbbb)
+                                .addComponent(passwordField))
+                        .addComponent(ohyeah))
+        );
+
+        aslayout.setVerticalGroup(aslayout.createSequentialGroup()
+                .addComponent(bbbbbb)
+                .addGroup(aslayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(aaaaaa)
+                        .addComponent(usernameField))
+                .addGroup(aslayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(cccccc)
+                        .addComponent(passwordField))
+                .addComponent(ohyeah)
+        );
+
+        aframe.getContentPane().add(aspanel);
+        aframe.pack();
+        aframe.setVisible(true);
     }
 
 
@@ -211,19 +339,24 @@ public class Client {
         } else {
 
             if (args.length > 0 && args[0].equals("-console")) {
-                System.out.println("Failed to connect to server!");
+                System.out.println("Wyvern Console is deprecated! You are unable to launch this in a release enviorment.");
             } else {
-                //JOptionPane.showMessageDialog(null, "Failed to connect to server: " + client.reason, "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Please keep in mind that this is an open testing phase.\n" +
+                        "We are not yet ready for a full userbase to register yet\n" +
+                        "Please report all bugs found!\n" +
+                        "Enjoy the testing phase of Wyvern Chat!", "Welcome to Wyvern", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
 
+    @Deprecated
     public void startConsole() {
         Scanner scanner = new Scanner(System.in);
 
         try {
             socket = new Socket(host, port);
             System.out.println("Connected to server: " + socket);
+            System.out.println("Wyvern Console is being phased out! This wont be a thing on release!");
 
             Thread thread = new Thread(() -> {
                 try {
