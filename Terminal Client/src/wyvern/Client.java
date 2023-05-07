@@ -1,9 +1,14 @@
+package wyvern;
+
 import wyvern.net.AbstractPacket;
 import wyvern.net.PacketHandler;
 import wyvern.net.PacketRegistry;
+import wyvern.net.handlers.ChatHandler;
+import wyvern.net.handlers.HandshakeHandler;
+import wyvern.net.packets.Packet0Handshake;
+import wyvern.net.packets.Packet1Chat;
 
 import java.io.*;
-import java.net.ConnectException;
 import java.net.Socket;
 import java.util.Objects;
 import java.util.Scanner;
@@ -187,7 +192,7 @@ public class Client {
     }
 
     public void ConnectionDialog() {
-        eframe = new JFrame("Wyvern Chat - Alpha Test Client");
+        eframe = new JFrame("Wyvern Chat - Alpha Test wyvern.Client");
         // Set up the GUI components
         eframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         eframe.setSize(400, 300);
@@ -461,6 +466,13 @@ public class Client {
 
 
     public void start() {
+        PacketRegistry.registerPacket(0, Packet0Handshake.class);
+        PacketRegistry.registerPacketHandler(0, HandshakeHandler.class);
+
+        PacketRegistry.registerPacket(1, Packet1Chat.class);
+        PacketRegistry.registerPacketHandler(1, ChatHandler.class);
+
+
         SwingUtilities.invokeLater(this::createAndShowGUI);
         new Thread(() -> {
             try {
@@ -479,7 +491,7 @@ public class Client {
                                 packet.readData(dis);
 
                                 PacketHandler packetHandler = PacketRegistry.getPacketHandler(packetID).newInstance();
-                                packetHandler.handlePacket(packet);
+                                packetHandler.handlePacket(this, packet);
                             }
 
                             /*String message = dis.readUTF();
