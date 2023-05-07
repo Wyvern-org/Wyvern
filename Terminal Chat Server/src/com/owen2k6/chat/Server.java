@@ -2,6 +2,8 @@ package com.owen2k6.chat;
 
 import com.google.gson.Gson;
 import com.owen2k6.chat.account.user;
+import com.owen2k6.chat.commands.CommandProcessor;
+import com.owen2k6.chat.event.ChatEvent;
 import com.owen2k6.chat.event.EventSystem;
 import com.owen2k6.chat.server.channels;
 import com.owen2k6.chat.server.servers;
@@ -13,14 +15,13 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.io.*;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.nio.channels.Channel;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import com.owen2k6.chat.network.messageoftheday;
+
 import com.owen2k6.chat.configuration.motd;
+import com.owen2k6.chat.threads.ClientRedux;
 
 public class Server {
     public static EventSystem EVENT_SYSTEM = new EventSystem();
@@ -33,12 +34,14 @@ public class Server {
     private ServerSocket server;
     private int port = 5600;
     private List<Client> clients;
+    private List<ClientRedux> reduxClients;
 
     public ArrayList<servers> servers;
     public ArrayList<channels> channels;
     public ArrayList<groups> groups;
     public static ArrayList<String> onlineUsers = new ArrayList<String>();
     public Gson gson = new Gson();
+    public CommandProcessor commandProcessor = new CommandProcessor();
 
     public byte[] generateSalt(int length) {
         SecureRandom random = new SecureRandom();
@@ -228,6 +231,7 @@ public class Server {
 
     public Server() {
         clients = new ArrayList<>();
+        reduxClients = new ArrayList<>();
         try {
             server = new ServerSocket(port);
         } catch (IOException e) {
@@ -285,12 +289,15 @@ public class Server {
                     e.printStackTrace();
                 }
             }
+
             while (true) {
                 try {
-                    Client client = new Client(this, server.accept());
-                    System.out.println("Client join: " + client);
-                    clients.add(client);
-                    client.start();
+                    //Client client = new Client(this, server.accept());
+                    ClientRedux reduxClient = new ClientRedux(this, server.accept());
+                    reduxClients.add(reduxClient);
+                    System.out.println("Client join: " + reduxClient);
+                    //clients.add(client);
+                    reduxClient.start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

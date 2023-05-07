@@ -10,6 +10,7 @@ import com.owen2k6.chat.network.redux.packets.Packet1Chat;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ClientRedux extends Thread
 {
@@ -47,11 +48,19 @@ public class ClientRedux extends Thread
                     AbstractPacket packet = packetClass.newInstance();
                     packet.readData(dis);
 
+                    // this should be the only hardcoded packet handler, for AOT system command processing
+                    if (packet instanceof Packet1Chat)
+                    {
+                        Packet1Chat chat = (Packet1Chat) packet;
+                        Server.getInstance().commandProcessor.processCommand(this, chat.getMessage());
+                    }
+
                     PacketHandler packetHandler = PacketRegistry.getPacketHandler(packetID).newInstance();
                     packetHandler.handlePacket(this, packet);
                 }
             }
         } catch (Exception ex) {
+            if (ex instanceof EOFException || ex instanceof SocketException) return;
             ex.printStackTrace();
         }
     }
@@ -77,5 +86,15 @@ public class ClientRedux extends Thread
     {
         sendMessage(message);
         socket.close();
+    }
+
+    public void setLoggedIn(boolean flag)
+    {
+        loggedIn = flag;
+    }
+
+    public String toString()
+    {
+        return socket.toString();
     }
 }

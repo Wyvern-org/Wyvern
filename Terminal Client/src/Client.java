@@ -1,3 +1,7 @@
+import wyvern.net.AbstractPacket;
+import wyvern.net.PacketHandler;
+import wyvern.net.PacketRegistry;
+
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
@@ -466,16 +470,25 @@ public class Client {
                 Thread thread = new Thread(() -> {
                     try {
                         boolean done = false;
-                        DataInputStream dis = new DataInputStream(
-                                new BufferedInputStream(socket.getInputStream()));
+                        DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
                         while (!done) {
-                            String message = dis.readUTF();
+                            int packetID = dis.readInt();
+                            Class<? extends AbstractPacket> packetClass = PacketRegistry.getPacketClass(packetID);
+                            if (packetClass != null) {
+                                AbstractPacket packet = packetClass.newInstance();
+                                packet.readData(dis);
+
+                                PacketHandler packetHandler = PacketRegistry.getPacketHandler(packetID).newInstance();
+                                packetHandler.handlePacket(packet);
+                            }
+
+                            /*String message = dis.readUTF();
                             receiveMessage(message);
-                            done = message.equals("-> Server Stopping!");
+                            done = message.equals("-> Server Stopping!");*/
                         }
                         dis.close();
                         socket.close();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });

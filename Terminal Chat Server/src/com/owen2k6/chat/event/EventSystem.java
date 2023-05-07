@@ -27,7 +27,7 @@ public class EventSystem
             eventListeners.get(eventType).remove(listener);
     }
 
-    public void fireEvent(String eventType, Object eventData)
+    public void fireEvent(String eventType, AbstractEvent eventData)
     {
         if (eventListeners.containsKey(eventType))
             for (EventListener listener : eventListeners.get(eventType))
