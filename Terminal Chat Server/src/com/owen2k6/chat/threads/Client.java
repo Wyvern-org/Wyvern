@@ -3,15 +3,15 @@ package com.owen2k6.chat.threads;
 import com.owen2k6.chat.Server;
 import com.owen2k6.chat.account.Permissions;
 import com.owen2k6.chat.account.user;
+import com.owen2k6.chat.network.redux.AbstractPacket;
+import com.owen2k6.chat.network.redux.packets.Packet1Chat;
 import com.owen2k6.chat.server.channels;
 import com.owen2k6.chat.server.servers;
-import com.owen2k6.chat.Server;
 
-import javax.print.DocFlavor;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.UUID;
+
 import com.owen2k6.chat.configuration.motd;
 
 public class Client extends Thread {
@@ -24,6 +24,8 @@ public class Client extends Thread {
     public channels currentchannel;
     public String bupUsername;
     public Client bupClient;
+    private DataInputStream dis;
+    private DataOutputStream dos;
 
     public Client(Server server, Socket socket) {
         this.socket = socket;
@@ -37,8 +39,8 @@ public class Client extends Thread {
     public void run() {
         while (socket.isConnected()) {
             try {
-                DataInputStream dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-                DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+                dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
                 sendMessage(motd.getMOTD());
                 boolean done = false;
                 while (!done) {
@@ -264,6 +266,18 @@ public class Client extends Thread {
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         dos.writeUTF(message);
         dos.flush();
+    }
+
+    public void sendPacket(AbstractPacket packet) throws IOException
+    {
+        dos.writeInt(packet.getPacketID());
+        packet.writeData(dos);
+    }
+
+    public void disconnect(String message) throws IOException
+    {
+        Packet1Chat chat = new Packet1Chat(message);
+        sendPacket(chat);
     }
 
     public void loadData(String username) throws IOException {
