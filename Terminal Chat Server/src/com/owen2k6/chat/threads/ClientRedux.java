@@ -115,4 +115,8 @@ public class ClientRedux extends Thread
             userInfo = server.gson.fromJson(reader, user.class);
         }
     }
+
+    public user getUserInfo() {
+        return userInfo;
+    }
 }
