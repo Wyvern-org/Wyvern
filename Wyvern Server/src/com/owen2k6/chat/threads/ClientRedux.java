@@ -89,7 +89,7 @@ public class ClientRedux extends Thread
         disconnect("Quit");
     }
 
-    public void disconnect(String message) throws IOException
+    public void disconnect(String message) throws IOException // why tf we have two of the same function and one calls itself into the ring
     {
         sendMessage(message);
         socket.close();

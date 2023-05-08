@@ -19,6 +19,19 @@ import java.awt.event.*;
 
 public class Client {
 
+    //region Server URLS
+    private String centralUAS = "dev.uas.wyvern.owen2k6.com"; //Central UAS server host
+    //Important insert for those wondering
+    // Wyvern can be hosted by everyone, which would be good except it is very easy for there to be a server designed to log passwords and info by altering packets.
+    // An implementation of a central user account server helps provide a sense of security where you log in to the UAS server, and it sends a session token.
+    // A new token is generated for every server you connect to and is stored in the UAS server and the client.
+    // The token is then submitted to the server and the server will contact the UAS server to verify the token.
+    // To avoid hijacking the UAS key sent by the client, it will be restricted to the IP of the server and the IP of the client.
+    // The client will have the ability to log in with UAS however, registration will most likely be done via website
+    // We will probably add a registration method in the client when we have finished UAS.
+    private String wyvernH = "dev.wyvern.owen2k6.com"; //Wyvern Chat server host
+    private int wyvernP = 5600; //Wyvern Chat server port
+
     //TODO: Protocols
     public int protocol = 1;
     public float version = 0.01f;
@@ -27,12 +40,12 @@ public class Client {
 
 
     private Socket socket;
-    private String host = "dev.wyvern.owen2k6.com"; //initialised as a nullsafe.
+    private String host;
     private String username = "";
     private String password = "";
-    private String wyvernH = "dev.wyvern.owen2k6.com";
-    private int port = 5600; // initialised as a nullsafe.
-    private int wyvernP = 5600;
+
+    private int port;
+
 
     private JFrame frame;
     private JFrame eframe; // hector

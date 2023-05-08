@@ -2,7 +2,7 @@
   <artifact type="jar" name="Terminal Client:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Terminal_Client_jar</output-path>
     <root id="archive" name="Terminal Client.jar">
-      <element id="module-output" name="Terminal Client" />
+      <element id="module-output" name="Wyvern Client" />
       <element id="extracted-dir" path="$PROJECT_DIR$/libs/jline-3.0.0.M1.jar" path-in-jar="/" />
     </root>
   </artifact>

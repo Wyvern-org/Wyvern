@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Central Account System/Central Account System.iml" filepath="$PROJECT_DIR$/Central Account System/Central Account System.iml" />
       <module fileurl="file://$PROJECT_DIR$/Terminal Chat.iml" filepath="$PROJECT_DIR$/Terminal Chat.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Terminal Chat Server/Terminal Chat Server.iml" filepath="$PROJECT_DIR$/Terminal Chat Server/Terminal Chat Server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Terminal Client/Terminal Client.iml" filepath="$PROJECT_DIR$/Terminal Client/Terminal Client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Wyvern Client/Wyvern Client.iml" filepath="$PROJECT_DIR$/Wyvern Client/Wyvern Client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Wyvern Server/Wyvern Server.iml" filepath="$PROJECT_DIR$/Wyvern Server/Wyvern Server.iml" />
     </modules>
   </component>
 </project>

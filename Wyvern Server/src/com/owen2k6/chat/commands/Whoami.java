@@ -16,14 +16,6 @@ public class Whoami implements CommandHandler {
             }
             return;
         }
-        if (args.length > 0) {
-            try {
-                sender.sendMessage("Invalid command, usage: /whoami");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            return;
-        }
         try {
             sender.sendMessage("Username: " + sender.getUserInfo().username);
             sender.sendMessage("UUID: " + sender.getUserInfo().uuid);
