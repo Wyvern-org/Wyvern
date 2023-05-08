@@ -223,7 +223,7 @@ public class Client {
             } catch (IOException ex) {
                 allowrun = false;
                 if (port == wyvernP && Objects.equals(host, wyvernH)) {
-                    JOptionPane.showMessageDialog(null, "The Wyvern servers are currently unavailable at this time.\nThe servers may be down or your DNS provider does not have us on record.\nPlease try again later.", "Alert!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The Wyvern servers are currently unavailable at this time.\nThe servers may be down or your DNS provider does not have us on record.\nPlease try again later.\n\n" + ex.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "Failed to connect to server: \n" + ex.getMessage() + "\nIf the message above is the URL of the server, your DNS cant reach the server.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -234,7 +234,8 @@ public class Client {
                 JOptionPane.showMessageDialog(null, "Please keep in mind that this is an open testing phase.\n" +
                         "We are not yet ready for a full userbase to register yet\n" +
                         "Please report all bugs found!\n" +
-                        "Enjoy the testing phase of Wyvern Chat!", "Welcome to Wyvern", JOptionPane.INFORMATION_MESSAGE);
+                        "Enjoy the testing phase of Wyvern Chat!", "Welcome to Wyvern Alpha", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Wyvern is currently under a backend rewrite. \nYou are unable to interact with the server in any way until it is complete/partially complete.\n", "NOTICE", JOptionPane.WARNING_MESSAGE);
             } else {
                 eframe.dispose();
                 ConnectionDialog();
