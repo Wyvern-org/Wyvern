@@ -18,7 +18,7 @@ public class Login implements CommandHandler
             }
             return;
         }
-        if (args.length < 3) {
+        if (args.length < 2) {
             try {
                 sender.sendMessage("Invalid command, usage: /login <username> <password>");
             } catch (IOException e) {
@@ -28,13 +28,13 @@ public class Login implements CommandHandler
         }
 
         try {
-            if (Server.getInstance().login(args[1], args[2])) {
+            if (Server.getInstance().login(args[0], args[1])) {
                 sender.setLoggedIn(true);
-                sender.loadData(args[1]);
+                sender.loadData(args[0]);
                 sender.sendMessage("You are now logged in.");
-                Server.getInstance().onlineUsers.add(args[1]);
+                Server.getInstance().onlineUsers.add(args[0]);
                 try {
-                    Server.getInstance().broadcastMessage(args[1] + " is now online.", null);
+                    Server.getInstance().broadcastMessage(args[0] + " is now online.", null);
                     Server.getInstance().broadcastMembersList(null);
                 } catch (IOException e) {
                     throw new RuntimeException(e);

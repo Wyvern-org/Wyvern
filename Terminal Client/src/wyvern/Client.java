@@ -223,9 +223,9 @@ public class Client {
             } catch (IOException ex) {
                 allowrun = false;
                 if (port == wyvernP && Objects.equals(host, wyvernH)) {
-                    JOptionPane.showMessageDialog(null, "The Wyvern servers are currently unavailable at this time.\n" + ex.getMessage() + "\nPlease try again later.", "Alert!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The Wyvern servers are currently unavailable at this time.\nThe servers may be down or your DNS provider does not have us on record.\nPlease try again later.", "Alert!", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Failed to connect to server: \n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Failed to connect to server: \n" + ex.getMessage() + "\nIf the message above is the URL of the server, your DNS cant reach the server.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
             if (allowrun) {
