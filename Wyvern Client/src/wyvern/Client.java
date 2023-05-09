@@ -259,11 +259,6 @@ public class Client {
             if (allowrun) {
                 eframe.dispose();
                 start();
-                JOptionPane.showMessageDialog(null, "Please keep in mind that this is an open testing phase.\n" +
-                        "We are not yet ready for a full userbase to register yet\n" +
-                        "Please report all bugs found!\n" +
-                        "Enjoy the testing phase of Wyvern Chat!", "Welcome to Wyvern Alpha", JOptionPane.INFORMATION_MESSAGE);
-                JOptionPane.showMessageDialog(null, "Wyvern is currently under a backend rewrite. \nYou are unable to interact with the server in any way until it is complete/partially complete.\n", "NOTICE", JOptionPane.WARNING_MESSAGE);
             } else {
                 eframe.dispose();
                 ConnectionDialog();
@@ -530,6 +525,14 @@ public class Client {
                     onlineList.setText(sb.toString());
                 });
             }
+            if (message.startsWith("{GLOBALALERT:")) {
+                String msgfrm = message.replace("{GLOBALALERT:", "");
+                msgfrm = msgfrm.replace("#n", "\n");
+                String formattedMessage = format(msgfrm);
+                JOptionPane.showMessageDialog(null, formattedMessage, "Alert!", JOptionPane.ERROR_MESSAGE);
+                //At this point, the user has been disallowed entry and been disconnected.
+                System.exit(5318008);
+            }
         }
     }
 
@@ -596,6 +599,7 @@ public class Client {
                         dis.close();
                         socket.close();
                     } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Connection to the server has been lost.", "Error", JOptionPane.ERROR_MESSAGE);
                         e.printStackTrace();
                     }
                 });

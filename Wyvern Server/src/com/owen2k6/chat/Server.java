@@ -32,6 +32,8 @@ import com.owen2k6.chat.configuration.motd;
 import com.owen2k6.chat.threads.ClientRedux;
 
 public class Server {
+
+    public boolean buildasPRERELEASE = true;
     public static EventSystem EVENT_SYSTEM = new EventSystem();
     private static Server singleton;
     public static Server getInstance()
@@ -315,6 +317,10 @@ public class Server {
                     ClientRedux reduxClient = new ClientRedux(this, server.accept());
                     reduxClients.add(reduxClient);
                     System.out.println("Client join: " + reduxClient);
+                    if(buildasPRERELEASE){
+                        sumbitglobalmessage("Wyvern Servers have not launched yet! #nPlease wait until the official launch is done. #nYou may self host a wyvern server while you wait #n#nCopyright (c) Wyvern 2023");
+                        reduxClient.disconnect("disallowed");
+                    }
                     //clients.add(client);
                     reduxClient.start();
                 } catch (IOException e) {
@@ -351,6 +357,18 @@ public class Server {
 
         }
 
+    }
+
+    public void sumbitglobalmessage(String message){
+        for (ClientRedux c : reduxClients) {
+            try {
+                    c.sendMessage("{GLOBALALERT:" + message);
+            } catch (Exception e) {
+                //ignore
+
+            }
+
+        }
     }
 
     public void broadcastMessageToChannel(String message, Client src, channels channel, servers serv) throws
