@@ -19,8 +19,11 @@ import java.awt.event.*;
 
 public class Client {
 
+    private static Boolean development;
+
     //region Server URLS
-    private String centralUAS = "dev.uas.wyvern.owen2k6.com"; //Central UAS server host
+    private String centralUAS = "prod.uas.wyvernapp.com"; //Central UAS server host
+    private String devUAS = "dev.uas.wyvernapp.com"; //Central UAS server host
     //Important insert for those wondering
     // Wyvern can be hosted by everyone, which would be good except it is very easy for there to be a server designed to log passwords and info by altering packets.
     // An implementation of a central user account server helps provide a sense of security where you log in to the UAS server, and it sends a session token.
@@ -29,7 +32,8 @@ public class Client {
     // To avoid hijacking the UAS key sent by the client, it will be restricted to the IP of the server and the IP of the client.
     // The client will have the ability to log in with UAS however, registration will most likely be done via website
     // We will probably add a registration method in the client when we have finished UAS.
-    private String wyvernH = "dev.wyvern.owen2k6.com"; //Wyvern Chat server host
+    private String wyvernH = "prod.chat.wyvernapp.com"; //Wyvern Chat server host
+    private String devH = "dev.chat.wyvernapp.com"; //Wyvern Chat server host
     private int wyvernP = 5600; //Wyvern Chat server port
 
     //TODO: Protocols
@@ -359,6 +363,12 @@ public class Client {
     }
 
     public static void main(String[] args) {
+        if (args.length > 0 && args[0].equals("-dev")) {
+            System.out.println("DEV MODE ENABLED.");
+            development = true;
+        } else {
+            development = false;
+        }
         Client client = new Client();
         if (client.allowrun) {
             if (args.length > 0 && args[0].equals("-console")) {
