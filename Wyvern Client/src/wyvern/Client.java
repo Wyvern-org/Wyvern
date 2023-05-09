@@ -9,17 +9,21 @@ import wyvern.net.packets.Packet0Handshake;
 import wyvern.net.packets.Packet1Chat;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Objects;
 import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class Client {
 
     public static Boolean development = false;
+    public static Boolean uase = false;
 
     //region Server URLS
     private String centralUAS = "prod.uas.wyvernapp.com"; //Central UAS server host
@@ -360,15 +364,62 @@ public class Client {
 
 
     public Client() {
-        try {
-            if(development) {
-                socket = new Socket(devUAS, 666);
-            } else{
-                socket = new Socket(centralUAS, 666);
+        JProgressBar progressBar = new JProgressBar(0, 100);
+        progressBar.setString("Connecting...");
+        progressBar.setStringPainted(true);
+        JOptionPane optionPane = new JOptionPane(progressBar, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
+        JDialog dialog = optionPane.createDialog("Wyvern Chat");
+
+        SwingWorker<Socket, Integer> worker = new SwingWorker<Socket, Integer>() {
+            @Override
+            protected Socket doInBackground() throws Exception {
+                Socket s;
+                int progress = 0;
+                int timeout = 5000; // 5 seconds
+                try {
+                    if (development) {
+                        s = new Socket();
+                        progressBar.setValue(10);
+                        s.connect(new InetSocketAddress(devUAS, 666), timeout);
+                        progressBar.setValue(100);
+                    } else {
+                        s = new Socket();
+                        progressBar.setValue(10);
+                        s.connect(new InetSocketAddress(centralUAS, 666), timeout);
+                        progressBar.setValue(100);
+                    }
+                } catch (IOException ex) {
+                    progressBar.setValue(20);
+                    JOptionPane.showMessageDialog(null, "Wyvern User Account Services are currently unavailable at this time.\nThere may be a problem with your network. Please try again later...\nYou may still connect to servers that use the Local User system.\n/login and /register.\n\n" + ex.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
+                    return null;
+                }
+                while (progress < 100) {
+                    publish(progress);
+                    Thread.sleep(20);
+                }
+                return s;
             }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Wyvern User Account Services are currently unavailable at this time.\nThere may be a problem with your network. Please try again later...\n\n" + ex.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
-        }
+            protected void process(List<Integer> chunks) {
+                progressBar.setValue(chunks.get(chunks.size() - 1));
+            }
+            protected void done() {
+                try {
+                    Socket s = get();
+                    if (s != null) {
+                        JOptionPane.showMessageDialog(null, "Welcome to Wyvern Chat!\nIn the future, you will recieve updates via this panel\nFor now, you get this friendly message!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        socket = s;
+                    }
+                } catch (InterruptedException | ExecutionException ex) {
+                    JOptionPane.showMessageDialog(null, "An error occurred while connecting to Wyvern User Account Services:\n\n" + ex.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    dialog.dispose();
+                }
+            }
+        };
+        worker.execute();
+        dialog.setVisible(true);
+
+
         if (console) {
             System.out.println("Connecting to server...");
         } else {
