@@ -114,8 +114,7 @@ public class Client {
             public void actionPerformed(ActionEvent e) {
                 if (Objects.equals(usera.getSelectedItem(), "User")) {
                     //do nothing
-                }
-                else if (Objects.equals(usera.getSelectedItem(), "Log In")) {
+                } else if (Objects.equals(usera.getSelectedItem(), "Log In")) {
                     LoginPrompt();
                     usera.setSelectedIndex(0);
                 } else if (Objects.equals(usera.getSelectedItem(), "Log Out")) {
@@ -232,17 +231,16 @@ public class Client {
             allowrun = true;
             try {
                 if (portField.getText().isEmpty())
-                    if(development){
+                    if (development) {
                         port = wyvernP;
                     } else {
                         port = wyvernP;
                     }
                 if (ipAddressField.getText().isEmpty())
-                    if(development){
+                    if (development) {
                         host = devH;
-                    } else
-                    {
-                    host = wyvernH;
+                    } else {
+                        host = wyvernH;
                     }
 
                 socket = new Socket(host, port);
@@ -362,6 +360,15 @@ public class Client {
 
 
     public Client() {
+        try {
+            if(development) {
+                socket = new Socket(devUAS, 666);
+            } else{
+                socket = new Socket(centralUAS, 666);
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Wyvern User Account Services are currently unavailable at this time.\nThere may be a problem with your network. Please try again later...\n\n" + ex.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
+        }
         if (console) {
             System.out.println("Connecting to server...");
         } else {
@@ -444,8 +451,7 @@ public class Client {
         }
     }
 
-    public void sendPacket(AbstractPacket packet) throws IOException
-    {
+    public void sendPacket(AbstractPacket packet) throws IOException {
         DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         dos.writeInt(packet.getPacketID());
         packet.writeData(dos);
