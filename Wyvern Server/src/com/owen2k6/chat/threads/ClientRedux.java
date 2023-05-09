@@ -58,7 +58,10 @@ public class ClientRedux extends Thread
                             continue;
                         }
 
-                        if (!loggedIn) continue; // discard chats while not logged in
+                        if (!loggedIn) {
+                            sendMessage("Unauthenticated. Please login.");
+                            continue;
+                        }// discard chats while not logged in
                     }
 
                     PacketHandler packetHandler = PacketRegistry.getPacketHandler(packetID).newInstance();
@@ -89,7 +92,7 @@ public class ClientRedux extends Thread
         disconnect("Quit");
     }
 
-    public void disconnect(String message) throws IOException // why tf we have two of the same function and one calls itself into the ring
+    public void disconnect(String message) throws IOException
     {
         sendMessage(message);
         socket.close();
