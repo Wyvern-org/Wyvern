@@ -19,7 +19,7 @@ import java.awt.event.*;
 
 public class Client {
 
-    private static Boolean development;
+    public static Boolean development = false;
 
     //region Server URLS
     private String centralUAS = "prod.uas.wyvernapp.com"; //Central UAS server host
@@ -232,15 +232,24 @@ public class Client {
             allowrun = true;
             try {
                 if (portField.getText().isEmpty())
-                    port = wyvernP;
+                    if(development){
+                        port = wyvernP;
+                    } else {
+                        port = wyvernP;
+                    }
                 if (ipAddressField.getText().isEmpty())
+                    if(development){
+                        host = devH;
+                    } else
+                    {
                     host = wyvernH;
+                    }
 
                 socket = new Socket(host, port);
             } catch (IOException ex) {
                 allowrun = false;
-                if (port == wyvernP && Objects.equals(host, wyvernH)) {
-                    JOptionPane.showMessageDialog(null, "The Wyvern servers are currently unavailable at this time.\nThe servers may be down or your DNS provider does not have us on record.\nPlease try again later.\n\n" + ex.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
+                if (port == wyvernP && Objects.equals(host, wyvernH) || port == wyvernP && Objects.equals(host, devH)) {
+                    JOptionPane.showMessageDialog(null, "The Wyvern servers are currently unavailable at this time.\nThe servers may be down or your DNS provider does not have us on record.\nPlease try again later.\n\n" + ex.getMessage() + "\n" + host, "Alert!", JOptionPane.ERROR_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "Failed to connect to server: \n" + ex.getMessage() + "\nIf the message above is the URL of the server, your DNS cant reach the server.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -366,8 +375,6 @@ public class Client {
         if (args.length > 0 && args[0].equals("-dev")) {
             System.out.println("DEV MODE ENABLED.");
             development = true;
-        } else {
-            development = false;
         }
         Client client = new Client();
         if (client.allowrun) {
