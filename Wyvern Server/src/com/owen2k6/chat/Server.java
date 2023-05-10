@@ -318,8 +318,8 @@ public class Server {
                     reduxClients.add(reduxClient);
                     System.out.println("Client join: " + reduxClient);
                     if(buildasPRERELEASE){
-                        sumbitglobalmessage("Wyvern Servers have not launched yet! #nPlease wait until the official launch is done. #nYou may self host a wyvern server while you wait #n#nCopyright (c) Wyvern 2023");
-                        reduxClient.disconnect("disallowed");
+                        sumbitglobalmessage("Wyvern Servers have not launched yet! #nPlease wait until the official launch is done. #nYou may self host a wyvern server while you wait #nhttps://github.com/wyvern-org/wyvern#n#nCopyright (c) Wyvern 2023");
+                        reduxClient.disconnect("disallowed entry. Client will close itself");
                     }
                     //clients.add(client);
                     reduxClient.start();
