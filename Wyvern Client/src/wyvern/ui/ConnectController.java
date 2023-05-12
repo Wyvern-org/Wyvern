@@ -24,6 +24,7 @@ public class ConnectController extends WyvernController
             {
                 Redux.getInstance().getNetworkManager().connect(txtIP.getText(), Integer.parseInt(txtPort.getText()));
                 Redux.getInstance().loadWindow("/fxml/Main.fxml");
+                Redux.getInstance().getNetworkManager().start();
             } catch (IOException ex) {
                 Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "Connection failed: " + ex.getMessage());
             } catch (NumberFormatException ex) {
