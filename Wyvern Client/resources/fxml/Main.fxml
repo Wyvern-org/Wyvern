@@ -39,7 +39,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
@@ -106,17 +105,17 @@
             </Label>
           </children>
         </AnchorPane>
-        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-          <content>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
                         <TextFlow fx:id="chatLog" layoutX="10.0" layoutY="6.0" prefHeight="496.0" prefWidth="410.0" />
-                        <TextField fx:id="chatBox" layoutX="10.0" layoutY="513.0" prefHeight="24.0" prefWidth="350.0" promptText="Enter a chat message..." />
-                        <Button fx:id="sendButton" layoutX="369.0" layoutY="513.0" mnemonicParsing="false" text="Send" />
               </children>
             </AnchorPane>
-          </content>
-        </ScrollPane>
+                  <TextField fx:id="chatBox" prefHeight="24.0" prefWidth="1422.0" promptText="Enter a chat message..." />
+                  <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="701.0" text="Send" />
+               </children>
+            </VBox>
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Online Users" textAlignment="CENTER" textFill="$x2" wrapText="false" />

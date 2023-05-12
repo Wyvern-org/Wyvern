@@ -84,7 +84,12 @@ public class ClientRedux extends Thread
     {
         dos.writeInt(packet.getPacketID());
         packet.writeData(dos);
-        if (socket.isConnected() && !socket.isClosed()) dos.flush();
+        try
+        {
+            dos.flush();
+        } catch (SocketException ex) {
+            socket.close();
+        }
     }
 
     public void disconnect() throws IOException
