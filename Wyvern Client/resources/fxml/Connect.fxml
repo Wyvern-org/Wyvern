@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="235.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.ConnectController">
+   <children>
+      <Button fx:id="exitButton" layoutX="66.0" layoutY="176.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="63.0" text="Exit" />
+      <Button fx:id="connectButton" layoutX="159.0" layoutY="176.0" mnemonicParsing="false" text="Connect">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+      <TextField fx:id="txtIP" layoutX="66.0" layoutY="116.0" promptText="Server IP address..." />
+      <TextField fx:id="txtPort" layoutX="66.0" layoutY="145.0" promptText="Server port..." />
+      <Label layoutX="71.0" layoutY="6.0" text="Wyvern's official servers" />
+      <Label layoutX="76.0" layoutY="22.0" text="have not launched yet." />
+      <Label layoutX="76.0" layoutY="54.0" text="For now, self-hosting is" />
+      <Label layoutX="70.0" layoutY="70.0" text="the best and only option." />
+   </children>
+</AnchorPane>

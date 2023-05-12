@@ -7,7 +7,7 @@ import wyvern.net.packets.Packet0Handshake;
 
 public class HandshakeHandler implements PacketHandler
 {
-    public void handlePacket(Client a, AbstractPacket packet)
+    public void handlePacket(AbstractPacket packet)
     {
         try
         {

@@ -4,5 +4,5 @@ import wyvern.Client;
 
 public interface PacketHandler
 {
-    void handlePacket(Client client, AbstractPacket packet);
+    void handlePacket(AbstractPacket packet);
 }

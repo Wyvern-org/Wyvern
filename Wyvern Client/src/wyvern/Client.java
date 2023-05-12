@@ -24,6 +24,7 @@ public class Client {
 
     public static Boolean development = false;
     public static Boolean uase = false;
+    public static Client instance;
 
     //region Server URLS
     private String centralUAS = "prod.uas.wyvernapp.com"; //Central UAS server host
@@ -564,6 +565,7 @@ public class Client {
 
 
     public void start() {
+        instance = this;
         PacketRegistry.registerPacket(0, Packet0Handshake.class);
         PacketRegistry.registerPacketHandler(0, HandshakeHandler.class);
 
@@ -589,7 +591,7 @@ public class Client {
                                 packet.readData(dis);
 
                                 PacketHandler packetHandler = PacketRegistry.getPacketHandler(packetID).newInstance();
-                                packetHandler.handlePacket(this, packet);
+                                packetHandler.handlePacket(packet);
                             }
 
                             /*String message = dis.readUTF();

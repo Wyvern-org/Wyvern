@@ -51,7 +51,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.MainController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -111,8 +111,8 @@
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
                         <TextArea layoutX="10.0" layoutY="6.0" prefHeight="496.0" prefWidth="410.0" />
-                        <TextField layoutX="10.0" layoutY="513.0" prefHeight="24.0" prefWidth="350.0" promptText="Enter a chat message..." />
-                        <Button layoutX="369.0" layoutY="513.0" mnemonicParsing="false" text="Send" />
+                        <TextField fx:id="chatBox" layoutX="10.0" layoutY="513.0" prefHeight="24.0" prefWidth="350.0" promptText="Enter a chat message..." />
+                        <Button fx:id="sendButton" layoutX="369.0" layoutY="513.0" mnemonicParsing="false" text="Send" />
               </children>
             </AnchorPane>
           </content>
@@ -120,7 +120,7 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Online Users" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                  <ListView layoutX="11.0" layoutY="37.0" prefHeight="504.0" prefWidth="200.0" />
+                  <ListView fx:id="onlineUsersList" layoutX="11.0" layoutY="37.0" prefHeight="504.0" prefWidth="200.0" />
           </children>
         </AnchorPane>
       </items>
