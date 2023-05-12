@@ -33,7 +33,6 @@ import com.owen2k6.chat.threads.ClientRedux;
 
 public class Server {
 
-    public boolean buildasPRERELEASE = true;
     public static EventSystem EVENT_SYSTEM = new EventSystem();
     private static Server singleton;
     public static Server getInstance()
@@ -317,7 +316,7 @@ public class Server {
                     ClientRedux reduxClient = new ClientRedux(this, server.accept());
                     reduxClients.add(reduxClient);
                     System.out.println("Client join: " + reduxClient);
-                    if(buildasPRERELEASE){
+                    if(!System.getenv().containsKey("WYVERN_DEV")) { // NOTE TO DEVS: add this environment variable to your intellij configuration
                         sumbitglobalmessage("Wyvern Servers have not launched yet! #nPlease wait until the official launch is done. #nYou may self host a wyvern server while you wait #nhttps://github.com/wyvern-org/wyvern#n#nCopyright (c) Wyvern 2023");
                         reduxClient.disconnect("disallowed entry. Client will close itself");
                     }
