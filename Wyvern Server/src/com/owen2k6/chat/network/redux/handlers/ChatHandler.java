@@ -21,7 +21,7 @@ public class ChatHandler implements PacketHandler
             Server.EVENT_SYSTEM.fireEvent("chat", chatEvent);
             if (chatEvent.isCancelled())
                 return;
-            Server.getInstance().broadcastMessage(chat.getMessage(), null);
+            Server.getInstance().broadcastMessage(String.format("<%s> %s", client.getUserInfo().username, chat.getMessage()), null);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

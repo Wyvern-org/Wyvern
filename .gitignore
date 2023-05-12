@@ -2,3 +2,24 @@
 /out/
 /data/
 /Central Account System/
+/libs/libavplugin-54.so
+/libs/libavplugin-56.so
+/libs/libavplugin-57.so
+/libs/libavplugin-ffmpeg-56.so
+/libs/libavplugin-ffmpeg-57.so
+/libs/libavplugin-ffmpeg-58.so
+/libs/libdecora_sse.so
+/libs/libfxplugins.so
+/libs/libglass.so
+/libs/libglassgtk2.so
+/libs/libglassgtk3.so
+/libs/libgstreamer-lite.so
+/libs/libjavafx_font.so
+/libs/libjavafx_font_freetype.so
+/libs/libjavafx_font_pango.so
+/libs/libjavafx_iio.so
+/libs/libjfxmedia.so
+/libs/libjfxwebkit.so
+/libs/libprism_common.so
+/libs/libprism_es2.so
+/libs/libprism_sw.so
