@@ -27,11 +27,10 @@ public class Client {
     public static Client instance;
 
     //region Server URLS
-    private String centralUAS = "prod.uas.wyvernapp.com"; //Central UAS server host
-    private int centralUASPort = 5555; //Central UAS server port
-    private int DevUASPort = 5100; //Dev UAS server port
-    //private String devUAS = "dev.uas.wyvernapp.com"; //Central UAS server host
-    private String devUAS = "127.0.0.1"; //Central UAS server host
+    private String centralUAS = "prod.uas.wyvernapp.com";
+    private int centralUASPort = 5555;
+    private int DevUASPort = 5555;
+    private String devUAS = "dev.uas.wyvernapp.com";
     //Important insert for those wondering
     // Wyvern can be hosted by everyone, which would be good except it is very easy for there to be a server designed to log passwords and info by altering packets.
     // An implementation of a central user account server helps provide a sense of security where you log in to the UAS server, and it sends a session token.

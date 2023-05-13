@@ -4,22 +4,40 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="235.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.ConnectController">
+<AnchorPane prefHeight="344.0" prefWidth="585.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.ConnectController">
    <children>
-      <Button fx:id="exitButton" layoutX="66.0" layoutY="176.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="63.0" text="Exit" />
-      <Button fx:id="connectButton" layoutX="159.0" layoutY="176.0" mnemonicParsing="false" text="Connect">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8a8a8a" height="71.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="181.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8a8a8a" height="141.0" layoutX="14.0" layoutY="90.0" stroke="BLACK" strokeType="INSIDE" width="181.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8a8a8a" height="96.0" layoutX="14.0" layoutY="236.0" stroke="BLACK" strokeType="INSIDE" width="181.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8a8a8a" height="319.0" layoutX="206.0" layoutY="13.0" stroke="BLACK" strokeType="INSIDE" width="367.0" />
+      <Button fx:id="connectButton" layoutX="23.0" layoutY="185.0" mnemonicParsing="false" text="Connect">
          <font>
-            <Font name="System Bold" size="13.0" />
+            <Font name="Arial Bold" size="13.0" />
          </font>
       </Button>
-      <TextField fx:id="txtIP" layoutX="66.0" layoutY="116.0" promptText="Server IP address..." />
-      <TextField fx:id="txtPort" layoutX="66.0" layoutY="145.0" promptText="Server port..." />
-      <Label layoutX="71.0" layoutY="6.0" text="Wyvern's official servers" />
-      <Label layoutX="76.0" layoutY="22.0" text="have not launched yet." />
-      <Label layoutX="76.0" layoutY="54.0" text="For now, self-hosting is" />
-      <Label layoutX="70.0" layoutY="70.0" text="the best and only option." />
+      <TextField fx:id="txtIP" layoutX="23.0" layoutY="122.0" promptText="Server IP address..." />
+      <TextField fx:id="txtPort" layoutX="23.0" layoutY="154.0" promptText="Server port..." />
+      <Label layoutX="24.0" layoutY="96.0" prefHeight="17.0" prefWidth="171.0" text="Connect to custom host">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="wyvernButton" layoutX="25.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="159.0" text="Connect to Wyvern">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Button>
+      <Label layoutX="25.0" layoutY="20.0" prefHeight="17.0" prefWidth="159.0" text="Wyvern">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button fx:id="LogOut" layoutX="23.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Log Out" />
+      <Button fx:id="Account" layoutX="103.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Account" />
+      <Label layoutX="17.0" layoutY="258.0" prefHeight="17.0" prefWidth="181.0" text="You are currently NOT logged in" />
+      <Label layoutX="293.0" layoutY="152.0" text="Some sunny day, you will see news here" />
    </children>
 </AnchorPane>
