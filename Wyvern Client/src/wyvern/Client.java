@@ -28,7 +28,10 @@ public class Client {
 
     //region Server URLS
     private String centralUAS = "prod.uas.wyvernapp.com"; //Central UAS server host
-    private String devUAS = "dev.uas.wyvernapp.com"; //Central UAS server host
+    private int centralUASPort = 5555; //Central UAS server port
+    private int DevUASPort = 5100; //Dev UAS server port
+    //private String devUAS = "dev.uas.wyvernapp.com"; //Central UAS server host
+    private String devUAS = "127.0.0.1"; //Central UAS server host
     //Important insert for those wondering
     // Wyvern can be hosted by everyone, which would be good except it is very easy for there to be a server designed to log passwords and info by altering packets.
     // An implementation of a central user account server helps provide a sense of security where you log in to the UAS server, and it sends a session token.
@@ -40,6 +43,7 @@ public class Client {
     private String wyvernH = "prod.chat.wyvernapp.com"; //Wyvern Chat server host
     private String devH = "dev.chat.wyvernapp.com"; //Wyvern Chat server host
     private int wyvernP = 5600; //Wyvern Chat server port
+    private int devP = 5200; //Wyvern Chat dev port
 
     //TODO: Protocols
     public int protocol = 1;
@@ -237,7 +241,7 @@ public class Client {
             try {
                 if (portField.getText().isEmpty())
                     if (development) {
-                        port = wyvernP;
+                        port = devP;
                     } else {
                         port = wyvernP;
                     }
@@ -371,27 +375,23 @@ public class Client {
             protected Socket doInBackground() throws Exception {
                 Socket s;
                 int progress = 0;
-                int timeout = 5000; // 5 seconds
+                int timeout = 10000; // 10 seconds
                 try {
                     if (development) {
                         s = new Socket();
                         progressBar.setValue(10);
-                        s.connect(new InetSocketAddress(devUAS, 666), timeout);
+                        s.connect(new InetSocketAddress(devUAS, DevUASPort), timeout);
                         progressBar.setValue(100);
                     } else {
                         s = new Socket();
                         progressBar.setValue(10);
-                        s.connect(new InetSocketAddress(centralUAS, 666), timeout);
+                        s.connect(new InetSocketAddress(centralUAS, centralUASPort), timeout);
                         progressBar.setValue(100);
                     }
                 } catch (IOException ex) {
                     progressBar.setValue(20);
                     JOptionPane.showMessageDialog(null, "Wyvern User Account Services are currently unavailable at this time.\nThere may be a problem with your network. Please try again later...\nYou may still connect to servers that use the Local User system.\n/login and /register.\n\n" + ex.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
                     return null;
-                }
-                while (progress < 100) {
-                    publish(progress);
-                    Thread.sleep(20);
                 }
                 return s;
             }
@@ -402,11 +402,17 @@ public class Client {
                 try {
                     Socket s = get();
                     if (s != null) {
-                        JOptionPane.showMessageDialog(null, "Welcome to Wyvern Chat!\nIn the future, you will recieve updates via this panel\nFor now, you get this friendly message!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                        String message = in.readLine();
+                        message = message.replace("#n", "\n");
+                        JOptionPane.showMessageDialog(null, message, "Welcome!", JOptionPane.INFORMATION_MESSAGE);
+                        //JOptionPane.showMessageDialog(null, "Welcome to Wyvern Chat!\nIn the future, you will recieve updates via this panel\nFor now, you get this friendly message!", "Success", JOptionPane.INFORMATION_MESSAGE);
                         socket = s;
                     }
                 } catch (InterruptedException | ExecutionException ex) {
                     JOptionPane.showMessageDialog(null, "An error occurred while connecting to Wyvern User Account Services:\n\n" + ex.getMessage(), "Alert!", JOptionPane.ERROR_MESSAGE);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 } finally {
                     dialog.dispose();
                 }

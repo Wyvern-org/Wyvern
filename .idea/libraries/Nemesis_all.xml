@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Nemesis-all">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Central Account System/libs/Nemesis-all.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
