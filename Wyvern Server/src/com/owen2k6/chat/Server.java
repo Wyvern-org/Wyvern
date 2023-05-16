@@ -38,7 +38,7 @@ public class Server {
     }
 
     private ServerSocket server;
-    private int port = 5200;
+    private int port = 5600;
     private List<Client> clients;
     private List<ClientRedux> reduxClients;
 
@@ -315,9 +315,10 @@ public class Server {
                     ClientRedux reduxClient = new ClientRedux(this, server.accept());
                     reduxClients.add(reduxClient);
                     System.out.println("Client join: " + reduxClient);
+                    //For development builds, I simply comment this out since i got no idea how to use this and it doesnt work when i add it to my configuration
                     if(!System.getenv().containsKey("WYVERN_DEV")) { // NOTE TO DEVS: add this environment variable to your intellij configuration
-                        sumbitglobalmessage("Wyvern Servers have not launched yet! #nPlease wait until the official launch is done. #nYou may self host a wyvern server while you wait #nhttps://github.com/wyvern-org/wyvern#n#nCopyright (c) Wyvern 2023");
-                        reduxClient.disconnect("disallowed entry. Client will close itself");
+                        sumbitglobalmessage("Wyvern Servers have not launched yet! \nPlease wait until the official launch is done. \nYou may self host a wyvern server while you wait \nhttps://github.com/wyvern-org/wyvern\n\nCopyright (c) Wyvern 2023");
+                        reduxClient.disconnect("Disconnected from server");
                     }
                     //clients.add(client);
                     reduxClient.start();
