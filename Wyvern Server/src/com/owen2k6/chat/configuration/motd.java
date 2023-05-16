@@ -31,13 +31,14 @@ public class motd extends Client {
         try (FileReader reader = new FileReader("data/settings/motd.json")) {
             messageoftheday motive = gson.fromJson(reader, messageoftheday.class);
             MOTD = motive.message;
-            System.out.println("Created MOTD Setting file");
+            System.out.println("Loaded MOTD: " + MOTD);
         } catch(IOException h){
-            System.out.println("Ay ay ay! Dios Mio");
+            System.out.println("There was a problem loading the MOTD file.");
+            System.out.println("Attempting to make a new file.");
             try {
                 save("Welcome to wyvern");
             } catch (IOException e) {
-                System.out.println("Shisse");
+                System.out.println("There was a problem creating a new file.");
             }
         }
     }
@@ -46,7 +47,7 @@ public class motd extends Client {
         try (FileWriter writer = new FileWriter("data/settings/motd.json")) {
             messageoftheday motive = new messageoftheday();
             if(i == null || i.isEmpty())
-                i = "Welcome to wyvern";
+                i = "Welcome to wyvern. There was a problem loading the servers MOTD. Please alert an administrator.";
             motive.message = i;
             gson.toJson(motive, messageoftheday.class, writer);
         }
