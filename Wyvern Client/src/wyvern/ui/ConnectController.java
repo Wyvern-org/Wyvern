@@ -37,7 +37,7 @@ public class ConnectController extends WyvernController
         wyvernButton.setOnAction(event -> {
             try
             {
-                    Redux.getInstance().getNetworkManager().connect("dev.chat.wyvernapp.com", 42069);
+                    Redux.getInstance().getNetworkManager().connect("dev.chat.wyvernapp.com", 5200);
                     Redux.getInstance().loadWindow("/fxml/Main.fxml");
                     Redux.getInstance().getNetworkManager().start();
             } catch (IOException ex) {
