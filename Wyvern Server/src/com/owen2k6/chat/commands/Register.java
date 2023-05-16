@@ -3,7 +3,9 @@ package com.owen2k6.chat.commands;
 import com.owen2k6.chat.Server;
 import com.owen2k6.chat.threads.ClientRedux;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Register implements CommandHandler {
 
@@ -17,18 +19,20 @@ public class Register implements CommandHandler {
             }
             return;
         }
-        if (args.length < 2) {
+        String directoryName = "data/users/" + args[0] + ".json";
+        File directory = new File(directoryName);
+        if (directory.exists()) {
             try {
-                sender.sendMessage("This creates a local account to the wyvern server.");
-                sender.sendMessage("Invalid command, usage: /register <username> <password> <confirm password>");
+                sender.sendMessage("This username is already taken.");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return;
         }
-        if(args[1] != args[2]) {
+        if (args.length < 2) {
             try {
-                sender.sendMessage("Passwords do not match!");
+                sender.sendMessage("This creates a local account to the wyvern server.");
+                sender.sendMessage("Invalid command, usage: /register <username> <password>");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
