@@ -14,7 +14,7 @@ public class ConnectController extends WyvernController
     @FXML protected TextField txtIP, txtPort;
     @FXML protected Button connectButton, wyvernButton, LogOut, Account;
 
-    @FXML protected void initialize(Boolean devMode)
+    @FXML protected void initialize()
     {
         setupButtonAnimation(connectButton, 1.1);
         setupButtonAnimation(wyvernButton, 1.1);
@@ -37,16 +37,9 @@ public class ConnectController extends WyvernController
         wyvernButton.setOnAction(event -> {
             try
             {
-                if (Main.devMode){
                     Redux.getInstance().getNetworkManager().connect("dev.chat.wyvernapp.com", 42069);
                     Redux.getInstance().loadWindow("/fxml/Main.fxml");
                     Redux.getInstance().getNetworkManager().start();
-                }
-                else{
-                    Redux.getInstance().getNetworkManager().connect("prod.chat.wyvernapp.com", 5600);
-                    Redux.getInstance().loadWindow("/fxml/Main.fxml");
-                    Redux.getInstance().getNetworkManager().start();
-                }
             } catch (IOException ex) {
                 Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "Connection failed: " + ex.getMessage());
             } catch (NumberFormatException ex) {

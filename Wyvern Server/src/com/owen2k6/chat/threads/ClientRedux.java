@@ -59,7 +59,8 @@ public class ClientRedux extends Thread
                         }
 
                         if (!loggedIn) {
-                            sendMessage("Unauthenticated. Please login.");
+                            sendMessage("&cYou are not logged in!");
+                            sendMessage("&cYou may log in locally using the login or register command.");
                             continue;
                         }// discard chats while not logged in
                     }

@@ -2,10 +2,7 @@ package com.owen2k6.chat;
 
 import com.google.gson.Gson;
 import com.owen2k6.chat.account.user;
-import com.owen2k6.chat.commands.CommandProcessor;
-import com.owen2k6.chat.commands.Login;
-import com.owen2k6.chat.commands.Logout;
-import com.owen2k6.chat.commands.Whoami;
+import com.owen2k6.chat.commands.*;
 import com.owen2k6.chat.event.ChatEvent;
 import com.owen2k6.chat.event.EventSystem;
 import com.owen2k6.chat.network.redux.PacketRegistry;
@@ -41,7 +38,7 @@ public class Server {
     }
 
     private ServerSocket server;
-    private int port = 5600;
+    private int port = 5200;
     private List<Client> clients;
     private List<ClientRedux> reduxClients;
 
@@ -309,6 +306,8 @@ public class Server {
             commandProcessor.registerHandler("login", Login.class);
             commandProcessor.registerHandler("whoami", Whoami.class);
             commandProcessor.registerHandler("logout", Logout.class);
+            commandProcessor.registerHandler("register", Register.class);
+            commandProcessor.registerHandler("bcast", Bcast.class);
 
             while (true) {
                 try {
