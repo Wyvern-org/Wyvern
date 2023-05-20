@@ -1,3 +1,5 @@
+//im sorry but why is this file even here.
+
 package com.owen2k6.chat.commands;
 
 import com.owen2k6.chat.Server;
