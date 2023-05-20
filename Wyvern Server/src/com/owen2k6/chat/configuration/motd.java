@@ -39,6 +39,8 @@ public class motd extends Client {
                 save("Welcome to wyvern");
             } catch (IOException e) {
                 System.out.println("There was a problem creating a new file.");
+                System.out.println("This issue is known and usually happens on first run.");
+                System.out.println("Easy fix: Restart the server 2 times.");
             }
         }
     }
