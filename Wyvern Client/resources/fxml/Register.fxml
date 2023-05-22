@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="472.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.Register">
+   <children>
+      <TextField fx:id="username" layoutX="15.0" layoutY="138.0" prefHeight="25.0" prefWidth="272.0" promptText="Pick a good username" />
+      <TextField fx:id="email" layoutX="15.0" layoutY="104.0" prefHeight="25.0" prefWidth="273.0" promptText="Email address" />
+      <PasswordField fx:id="password" layoutX="15.0" layoutY="172.0" prefHeight="25.0" prefWidth="273.0" promptText="Make a secure password!" />
+      <Label layoutX="14.0" layoutY="14.0" text="Welcome to Wyvern!">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="31.0" prefHeight="71.0" prefWidth="273.0" text="Our account registration is incredibly simple, &#10;All you have to do is answer the following questions &#10;and agree to the &quot;rules of wyvern&quot; thing to help keep&#10;you and us out of trouble!&#10;">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <TextField fx:id="age" layoutX="15.0" layoutY="250.0" prefHeight="25.0" prefWidth="41.0" promptText="Age" />
+      <Label layoutX="14.0" layoutY="197.0" prefHeight="35.0" prefWidth="273.0" text="In order to be COPPA complient, we have to ask&#10;for your age. We're keeping it simple though!" />
+      <TextArea fx:id="TOSPanel" editable="false" layoutX="300.0" layoutY="-1.0" prefHeight="480.0" prefWidth="518.0" promptText="The TOS is loading.............................................." />
+      <Label layoutX="15.0" layoutY="286.0" prefHeight="56.0" prefWidth="273.0" text="Now on the right, you will see the Wyvern &quot;TOS&quot;&#10;This is a basic set of rules mainly to keep you from&#10;doing any illegal stuff on our network!" />
+      <CheckBox fx:id="agegree" layoutX="62.0" layoutY="234.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="225.0" text="I agree that if this is found out&#10;to be incorrect, my account will &#10;be deleted" />
+      <CheckBox fx:id="tosagree" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="273.0" text="I agree to follow the wyvern TOS&#10;" />
+      <Label layoutX="14.0" layoutY="367.0" prefHeight="71.0" prefWidth="273.0" text="This only applies for use on Wyverns official server.&#10;Other Wyvern Hosts may enforce different network&#10;rules and you must follow their rules when on their&#10;network." />
+      <Button fx:id="Register" layoutX="15.0" layoutY="438.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="273.0" text="REGISTER!!!" />
+   </children>
+</AnchorPane>
