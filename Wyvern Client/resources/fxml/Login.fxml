@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fxml.Login"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="11.0" prefWidth="189.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.Login">
+   <children>
+      <Rectangle fill="#686868" height="184.0" smooth="false" stroke="#ffffff00" strokeLineJoin="ROUND" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" width="189.0" />
+      <Button layoutX="60.0" layoutY="147.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Login to Wyvern" />
+      <Label layoutX="12.0" layoutY="4.0" prefHeight="21.0" prefWidth="114.0" text="Welcome back!" textFill="#d1ffd3">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <TextField layoutX="14.0" layoutY="57.0" prefHeight="25.0" prefWidth="160.0" promptText="Email" />
+      <PasswordField layoutX="14.0" layoutY="89.0" prefHeight="25.0" prefWidth="160.0" promptText="Password" />
+      <CheckBox layoutX="14.0" layoutY="123.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="160.0" text="Remember login" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </CheckBox>
+      <Label layoutX="12.0" layoutY="25.0" prefHeight="21.0" prefWidth="160.0" text="Login to your wyvern account!" textFill="#d1ffd3">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Label>
+   </children>
 </AnchorPane>
