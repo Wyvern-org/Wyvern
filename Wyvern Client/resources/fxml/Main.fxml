@@ -39,7 +39,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -54,48 +53,27 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Wyvern">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem fx:id="mabout" mnemonicParsing="false" text="About" />
+                  <MenuItem fx:id="mquit" mnemonicParsing="false" text="Quit" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-          </items>
-        </Menu>
+            <Menu mnemonicParsing="false" text="My Account">
+               <items>
+                  <MenuItem fx:id="mabout1" mnemonicParsing="false" text="Account Info" />
+                  <MenuItem fx:id="mabout111" mnemonicParsing="false" text="Request Username Change" />
+                  <MenuItem fx:id="mabout11" mnemonicParsing="false" text="Change Password" />
+                  <MenuItem fx:id="mabout1111" mnemonicParsing="false" text="Request Username Change" />
+               </items>
+            </Menu>
       </menus>
     </MenuBar>
     <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
         <AnchorPane>
           <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Channels" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Network" textAlignment="CENTER" wrapText="false">
               <font>
                 <Font size="18.0" fx:id="x1" />
               </font>
@@ -103,6 +81,7 @@
                 <Color red="0.624" green="0.624" blue="0.624" fx:id="x2" />
               </textFill>
             </Label>
+                  <ListView fx:id="NetworkLS" layoutX="11.0" layoutY="41.0" prefHeight="504.0" prefWidth="200.0" />
           </children>
         </AnchorPane>
             <VBox prefHeight="200.0" prefWidth="100.0">
@@ -112,13 +91,17 @@
                         <TextFlow fx:id="chatLog" layoutX="10.0" layoutY="6.0" prefHeight="496.0" prefWidth="410.0" />
               </children>
             </AnchorPane>
-                  <TextField fx:id="chatBox" prefHeight="24.0" prefWidth="1422.0" promptText="Enter a chat message..." />
-                  <Button fx:id="sendButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="701.0" text="Send" />
+                  <Pane prefHeight="48.0" prefWidth="443.0">
+                     <children>
+                        <TextField fx:id="chatBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="378.0" promptText="Enter a chat message..." />
+                        <Button fx:id="sendButton" layoutX="377.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="27.0" prefWidth="66.0" text="Send" />
+                     </children>
+                  </Pane>
                </children>
             </VBox>
         <AnchorPane>
           <children>
-            <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Online Users" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+            <Label alignment="CENTER" font="$x1" layoutX="11.0" layoutY="10.0" prefHeight="27.0" prefWidth="108.0" style="&#10;" text="On right now" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                   <ListView fx:id="onlineUsersList" layoutX="11.0" layoutY="37.0" prefHeight="504.0" prefWidth="200.0" />
           </children>
         </AnchorPane>
