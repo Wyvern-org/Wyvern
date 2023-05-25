@@ -55,5 +55,8 @@ public class ConnectController extends WyvernController {
         login.setOnAction(event -> {
                 Redux.getInstance().loadWindow("/fxml/Login.fxml");
         });
+        register.setOnAction(event -> {
+            Redux.getInstance().loadWindow("/fxml/Register.fxml");
+        });
     }
 }
