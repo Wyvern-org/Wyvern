@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class ConnectController extends WyvernController {
     @FXML
-    protected Button wyvernButton, LogOut, Account, custom;
+    protected Button wyvernButton, LogOut, Account, custom, login, register;
     @FXML
     protected AnchorPane window;
 
@@ -51,6 +51,9 @@ public class ConnectController extends WyvernController {
             } catch (NumberFormatException ex) {
                 Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "You need to enter a valid port number (eg., 5600)");
             }
+        });
+        login.setOnAction(event -> {
+                Redux.getInstance().loadWindow("/fxml/Login.fxml");
         });
     }
 }

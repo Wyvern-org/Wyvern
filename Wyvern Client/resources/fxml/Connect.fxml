@@ -24,13 +24,11 @@
       </Label>
       <Button fx:id="LogOut" layoutX="23.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Log Out" />
       <Button fx:id="Account" layoutX="103.0" layoutY="298.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Account" />
-      <Label layoutX="20.0" layoutY="100.0" prefHeight="17.0" prefWidth="168.0" text="The Wyvern account service is" />
+      <Label layoutX="20.0" layoutY="100.0" prefHeight="17.0" prefWidth="168.0" text="Indev feature" />
       <Label fx:id="newstitle" layoutX="215.0" layoutY="20.0" prefHeight="34.0" prefWidth="351.0" text="Wyvern News">
          <font>
             <Font size="22.0" />
          </font></Label>
-      <Label layoutX="19.0" layoutY="117.0" prefHeight="17.0" prefWidth="168.0" text="currently unavailable." />
-      <Label layoutX="21.0" layoutY="196.0" prefHeight="17.0" prefWidth="168.0" text="Wyvern has not yet launched!" />
       <TextFlow fx:id="newspanel" layoutX="215.0" layoutY="59.0" prefHeight="267.0" prefWidth="351.0" />
       <Button fx:id="custom" layoutX="153.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="31.0" text="...">
          <font>
@@ -38,5 +36,7 @@
          </font>
       </Button>
       <Label layoutX="6.0" layoutY="331.0" prefHeight="17.0" prefWidth="572.0" text="Copyright (c) Wyvern 2023 under the Open Source Owen2k6 Licence" />
+      <Button fx:id="login" layoutX="20.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="168.0" text="Login" />
+      <Button fx:id="register" layoutX="21.0" layoutY="149.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="168.0" text="Register" />
    </children>
 </AnchorPane>
