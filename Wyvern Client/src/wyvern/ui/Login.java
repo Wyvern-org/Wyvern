@@ -32,9 +32,9 @@ public class Login extends WyvernController {
             }
         });
 
-        primaryStage.setOnCloseRequest(event -> {
-            Redux.getInstance().loadWindow("/fxml/Connect.fxml");
-        });
+//        primaryStage.setOnCloseRequest(event -> {
+//            Redux.getInstance().loadWindow("/fxml/Connect.fxml");
+//        });
 
     }
 
