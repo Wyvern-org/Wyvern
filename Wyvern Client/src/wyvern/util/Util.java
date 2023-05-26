@@ -1,5 +1,12 @@
 package wyvern.util;
 
+import javax.net.ssl.HttpsURLConnection;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Objects;
 
 public class Util
@@ -49,5 +56,57 @@ public class Util
     private static String backslashes(String input)
     {
         return input.replaceAll("/", "\\\\");
+    }
+
+    public static String httpGET(String urlString) throws IOException
+    {
+        URL url = new URL(urlString);
+        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK)
+        {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream())))
+            {
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null)
+                    response.append(line);
+                return response.toString();
+            }
+        } else {
+            throw new IOException("HTTP request failed with response code: " + responseCode);
+        }
+    }
+
+    public static String httpPOST(String urlString, String requestBody) throws IOException
+    {
+        URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setDoOutput(true);
+
+        try (OutputStream outputStream = connection.getOutputStream())
+        {
+            byte[] input = requestBody.getBytes("utf-8");
+            outputStream.write(input, 0, input.length);
+        }
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK)
+        {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream())))
+            {
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null)
+                    response.append(line);
+                return response.toString();
+            }
+        } else {
+            throw new IOException("HTTP request failed with response code: " + responseCode);
+        }
     }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="11.0" prefWidth="189.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.Login">
+<AnchorPane prefHeight="11.0" prefWidth="189.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.LoginController">
    <children>
       <Rectangle fill="#686868" height="184.0" smooth="false" stroke="#ffffff00" strokeLineJoin="ROUND" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" width="189.0" />
       <Button fx:id="login" layoutX="60.0" layoutY="147.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Login to Wyvern" />
