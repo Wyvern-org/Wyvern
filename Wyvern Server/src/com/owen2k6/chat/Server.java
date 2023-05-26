@@ -8,8 +8,10 @@ import com.owen2k6.chat.event.EventSystem;
 import com.owen2k6.chat.network.redux.PacketRegistry;
 import com.owen2k6.chat.network.redux.handlers.ChatHandler;
 import com.owen2k6.chat.network.redux.handlers.HandshakeHandler;
+import com.owen2k6.chat.network.redux.handlers.KeepaliveHandler;
 import com.owen2k6.chat.network.redux.packets.Packet0Handshake;
 import com.owen2k6.chat.network.redux.packets.Packet1Chat;
+import com.owen2k6.chat.network.redux.packets.Packet2Keepalive;
 import com.owen2k6.chat.server.channels;
 import com.owen2k6.chat.server.servers;
 import com.owen2k6.chat.server.groups;
@@ -302,6 +304,9 @@ public class Server {
 
             PacketRegistry.registerPacket(1, Packet1Chat.class);
             PacketRegistry.registerPacketHandler(1, ChatHandler.class);
+
+            PacketRegistry.registerPacket(2, Packet2Keepalive.class);
+            PacketRegistry.registerPacketHandler(2, KeepaliveHandler.class);
 
             commandProcessor.registerHandler("login", Login.class);
             commandProcessor.registerHandler("whoami", Whoami.class);
