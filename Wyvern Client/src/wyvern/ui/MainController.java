@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class MainController extends WyvernController
 {
-    @FXML public TextField chatBox;
+    @FXML public TextField chatBox; //Pushing to get above upstream
     @FXML public Button sendButton;
     @FXML public ListView<String> onlineUsersList;
     @FXML public TextFlow chatLog;
