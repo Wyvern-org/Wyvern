@@ -22,7 +22,7 @@ public class AuthJob extends AsyncJob
                 JsonObject req = new JsonObject();
                 req.addProperty("username", id);
                 req.addProperty("password", password);
-                return Util.httpPOST("https://wyvernapp.com/api/v1/authenticate", req.getAsString());
+                return Util.httpPOST("https://prod.uas.wyvernapp.com/api/v1/authenticate", req.getAsString());
             } catch (IOException ignored) {
                 //TODO: something went oops. handle it here
                 return null;

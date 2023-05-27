@@ -1,10 +1,13 @@
 package wyvern.ui;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import wyvern.util.jobs.RegisterJob;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -13,6 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Register extends WyvernController{
+    private static final Gson gson = new Gson();
 
     @FXML public Button Register;
     @FXML public TextField age, username, email, password;
@@ -41,7 +45,11 @@ public class Register extends WyvernController{
 
         Register.setOnAction(event -> {
             try {
-                URL url = new URL("http://prod.uas.wyvernapp.com/api/v1/user");
+                RegisterJob registerJob = new RegisterJob(email.getText(), username.getText(), password.getText(), (result) ->
+                {
+                    //TODO: i need to rework the entire http request system since we can't really see any of the metadata for the actual request in here
+                });
+                registerJob.start();
             } catch (Exception ex) {
                 System.out.println("Exception: " + ex.getMessage());
             }

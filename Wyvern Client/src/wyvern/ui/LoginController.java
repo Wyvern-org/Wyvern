@@ -52,6 +52,7 @@ public class LoginController extends WyvernController {
                     }
 
                 });
+                authJob.start(); // almost forgor to start the job lol
             } catch (Exception ex) {
                 Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "Alert: " + ex.getMessage());
             }
