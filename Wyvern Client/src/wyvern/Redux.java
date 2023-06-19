@@ -52,7 +52,7 @@ public class Redux
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Scene scene = new Scene(loader.load());
             this.activeController = loader.getController();
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxml/css/darcula.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fxml/css/win7.css")).toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.setTitle("Wyvern v" + Main.VERSION);
             primaryStage.setResizable(false);

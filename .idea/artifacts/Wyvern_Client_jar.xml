@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Wyvern Client:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Wyvern_Client_jar</output-path>
+    <root id="archive" name="Wyvern Client.jar">
+      <element id="module-output" name="Wyvern Client" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/richtextfx-fat-0.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/gson-2.10.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/jline-3.0.0.M1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
