@@ -31,6 +31,9 @@ public class ConnectController extends WyvernController {
                 Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "You need to enter a valid port number (eg., 5600)");
             }
         }
+        if (event.getCode() == KeyCode.CONTROL) {
+            Redux.getInstance().loadWindow("/fxml/CustomConnect.fxml");
+        }
     }
 
     @FXML
