@@ -31,7 +31,7 @@ public class loadNFR extends WyvernController{
             NC.setOnAction(event -> {
 //                try {
                     //Redux.getInstance().getNetworkManager().connect("prod.chat.wyvernapp.com", 5600);
-                    Redux.getInstance().loadWindow("/fxml/Main.fxml");
+                    Redux.getInstance().loadWindow("/fxml/nfr_use/"+ID.getText()+".fxml");
                     Redux.getInstance().getNetworkManager().start();
 //                }
 //                catch (IOException ex) {
@@ -43,7 +43,7 @@ public class loadNFR extends WyvernController{
             DS.setOnAction(event -> {
                 try {
                     Redux.getInstance().getNetworkManager().connect("dev.chat.wyvernapp.com", 5600);
-                    Redux.getInstance().loadWindow("/fxml/Main.fxml");
+                    Redux.getInstance().loadWindow("/fxml/nfr_use/"+ID.getText()+".fxml");
                     Redux.getInstance().getNetworkManager().start();
                 } catch (IOException ex) {
                     Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "Connection failed: " + ex.getMessage());

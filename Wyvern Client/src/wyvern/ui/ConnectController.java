@@ -34,6 +34,10 @@ public class ConnectController extends WyvernController {
         if (event.getCode() == KeyCode.CONTROL) {
             Redux.getInstance().loadWindow("/fxml/CustomConnect.fxml");
         }
+
+        if (event.getCode() == KeyCode.D){
+            Redux.getInstance().loadWindow("/fxml/nfr_use/loader.fxml");
+        }
     }
 
     @FXML

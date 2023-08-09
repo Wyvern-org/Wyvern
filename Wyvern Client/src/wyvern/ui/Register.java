@@ -22,10 +22,10 @@ public class Register extends WyvernController{
     @FXML public TextField age, username, email, password;
     @FXML public CheckBox agegree, tosagree;
 
-    @FXML public TextArea TOSPanel;
+    @FXML public TextArea TOSPanel, ServiceInfo;
     @FXML public void initialize() {
         try {
-            URL url = new URL("http://prod.uas.wyvernapp.com/tos.txt");
+            URL url = new URL("http://api.wyvernapp.com/tos.txt");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             int responseCode = connection.getResponseCode();
@@ -38,6 +38,24 @@ public class Register extends WyvernController{
             }
             reader.close();
             TOSPanel.setText(response.toString());
+            connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            URL url = new URL("http://api.wyvernapp.com/RSERV.txt");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+            System.out.println("Response Code: " + responseCode);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            StringBuilder response = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                response.append(line).append("\n");
+            }
+            reader.close();
+            ServiceInfo.setText(response.toString());
             connection.disconnect();
         } catch (Exception e) {
             e.printStackTrace();
