@@ -52,7 +52,10 @@ public class ConnectController extends WyvernController {
         DataStore dataStore = Redux.getInstance().getDataStore();
         if (dataStore.hasString("username"))
         {
+            lblAuthStatus.setTextFill(Color.DARKGREEN);
             lblAuthStatus.setText("Logged in as " + dataStore.getString("username", "N/A"));
+            login.setVisible(false);
+            register.setVisible(false);
         }
 
         try {
