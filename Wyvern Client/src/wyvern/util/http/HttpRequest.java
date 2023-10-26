@@ -2,10 +2,7 @@ package wyvern.util.http;
 
 import wyvern.util.jobs.IPostJob;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -69,7 +66,8 @@ public class HttpRequest
     {
         try
         {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(this.connection.getInputStream())))
+            InputStream is = this.connection.getResponseCode() == HttpURLConnection.HTTP_OK ? this.connection.getInputStream() : this.connection.getErrorStream();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is)))
             {
                 String line;
                 while ((line = reader.readLine()) != null)

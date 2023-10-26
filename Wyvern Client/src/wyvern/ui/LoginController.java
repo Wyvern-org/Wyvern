@@ -38,7 +38,6 @@ public class LoginController extends WyvernController {
                     HttpRequest request = (HttpRequest) httpRequest;
                     if (request == null || Objects.requireNonNull(request).getResponse().toString().isEmpty()) Redux.getInstance().alert(Alert.AlertType.ERROR, "Failed to connect to the User Authentication Server. Please try again later.", "Oh noes!");
                     JsonObject res = gson.fromJson(Objects.requireNonNull(request).getResponse().toString(), JsonObject.class);
-                    System.out.println("Raw auth response: " + request.getResponse().toString());
                     if (res.has("jwt"))
                     {
                         DataStore dataStore = Redux.getInstance().getDataStore();
@@ -56,7 +55,8 @@ public class LoginController extends WyvernController {
                     } else {
                         //TODO: auth definitely did not work, the jwt isn't there :/
                         // another side note, i forgor to add proper error handling to the API for when credentials are wrong
-                        Platform.runLater(() -> Redux.getInstance().alert(Alert.AlertType.ERROR, "Failed to authenticate!", "Oh noes!"));
+                        String msg = res.has("message") ? res.get("message").getAsString() : "Failed to authenticate!";
+                        Platform.runLater(() -> Redux.getInstance().alert(Alert.AlertType.ERROR, msg, "Oh noes!"));
                     }
                 });
                 authJob.start(); // almost forgor to start the job lol
