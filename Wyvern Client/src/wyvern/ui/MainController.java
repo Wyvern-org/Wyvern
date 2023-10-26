@@ -20,9 +20,11 @@ public class MainController extends WyvernController
     @FXML public ListView<String> onlineUsersList;
     @FXML public TextFlow chatLog;
 
+    @FXML public Label statuscon; // server status (online or offline or reconnecting)
+    @FXML public Label uol; // users online text.
+
     @FXML protected void initialize()
     {
-
         sendButton.setOnAction((event) ->
                 sendAndClear());
 
