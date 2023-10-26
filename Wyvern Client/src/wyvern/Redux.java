@@ -59,6 +59,7 @@ public class Redux
             primaryStage.show();
         } catch (Exception ex) {
             System.out.println("Failed to launch FX application");
+            ex.printStackTrace();
             System.exit(1);
         }
     }

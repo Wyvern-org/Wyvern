@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextArea?>
@@ -27,15 +26,15 @@
       <TextField fx:id="age" layoutX="17.0" layoutY="164.0" prefHeight="25.0" prefWidth="41.0" promptText="Age" />
       <TextArea fx:id="TOSPanel" editable="false" layoutX="17.0" layoutY="210.0" prefHeight="195.0" prefWidth="772.0" promptText="Please wait for Wyvern Online Services to provide the TOS Document..." />
       <Label layoutX="17.0" layoutY="194.0" prefHeight="16.0" prefWidth="630.0" text="Please read and review the Wyvern TOS below before continuing." />
-      <CheckBox fx:id="agegree" layoutX="74.0" layoutY="169.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="727.0" text="I agree that if my age is in violation of the Childrens Online Privacy Protection Act, my account will be deleted without notice." />
-      <CheckBox fx:id="tosagree" layoutX="20.0" layoutY="411.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="256.0" text="I agree to follow the Wyvern TOS&#10;" />
       <Label layoutX="20.0" layoutY="427.0" prefHeight="43.0" prefWidth="772.0" text="This only applies for use on Wyverns official server. Other Wyvern Hosters may enforce different network rules and you must follow their&#10;rules when on their network." />
-      <Button fx:id="Register" layoutX="20.0" layoutY="479.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="273.0" text="Register Account!" />
+      <Button fx:id="Register" layoutX="20.0" layoutY="479.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Register Account!" />
       <TextArea fx:id="ServiceInfo" editable="false" layoutX="363.0" layoutY="29.0" prefHeight="138.0" prefWidth="423.0" promptText="Wyvern Online Services is gathering information..." />
       <Label layoutX="363.0" layoutY="14.0" prefHeight="16.0" prefWidth="441.0" text="Service information">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Label layoutX="66.0" layoutY="168.0" prefHeight="17.0" prefWidth="441.0" text="If later on you are found to be under the age of 13, Your account WILL be deleted." />
+      <Label layoutX="17.0" layoutY="405.0" text="By continuing, you agree to these Terms of Service and will follow these terms on the Wyvern Network." />
    </children>
 </AnchorPane>

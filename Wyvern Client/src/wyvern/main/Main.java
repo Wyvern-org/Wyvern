@@ -8,19 +8,16 @@ import wyvern.Redux;
 import java.net.URL;
 import java.util.Objects;
 
-public class Main extends Application
-{
+public class Main extends Application {
 
-    public static float VERSION = 0.01f;
+    public static String VERSION = "0.0.1";
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception
-    {
+    public void start(Stage primaryStage) throws Exception {
         new Redux().init(primaryStage);
     }
 }

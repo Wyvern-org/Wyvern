@@ -25,7 +25,7 @@ public class Register extends WyvernController{
     @FXML public TextArea TOSPanel, ServiceInfo;
     @FXML public void initialize() {
         try {
-            URL url = new URL("http://api.wyvernapp.com/tos.txt");
+            URL url = new URL("http://api.wyvernapp.com/TOS.txt");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             int responseCode = connection.getResponseCode();

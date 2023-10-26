@@ -8,16 +8,8 @@ import javafx.util.Duration;
 
 public class WyvernController
 {
-    protected void setupButtonAnimation(Button button)
-    {
-        setupButtonAnimation(button,1.1D);
-    }
 
-    protected void setupButtonAnimation(Button button, double toScale)
-    {
-        button.setOnMouseEntered((e) -> scaleTransition(button, toScale));
-        button.setOnMouseExited((e) -> scaleTransition(button, 1.0D));
-    }
+
 
     protected void scaleTransition(Node node, double toScale)
     {

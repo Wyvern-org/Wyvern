@@ -39,6 +39,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -69,11 +70,11 @@
             </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.25501113585746105, 0.7516703786191536" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane>
+        <AnchorPane prefHeight="556.0" prefWidth="243.0">
           <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Network" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="11.0" layoutY="14.0" minWidth="60.0" prefHeight="22.0" prefWidth="112.0" style="&#10;" text="Communities" textAlignment="CENTER" wrapText="false">
               <font>
                 <Font size="18.0" fx:id="x1" />
               </font>
@@ -86,22 +87,26 @@
         </AnchorPane>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
-              <children>
-                        <TextFlow fx:id="chatLog" layoutX="10.0" layoutY="6.0" prefHeight="496.0" prefWidth="410.0" />
-              </children>
-            </AnchorPane>
-                  <Pane prefHeight="48.0" prefWidth="443.0">
+                  <ScrollPane prefHeight="539.0" prefWidth="440.0">
+                     <content>
+                        <TextFlow fx:id="chatLog" maxHeight="1.7976931348623157E308" prefHeight="534.0" prefWidth="424.0" />
+                     </content>
+                  </ScrollPane>
+                  <Pane prefHeight="23.0" prefWidth="440.0">
                      <children>
-                        <TextField fx:id="chatBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="378.0" promptText="Enter a chat message..." />
-                        <Button fx:id="sendButton" layoutX="377.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="27.0" prefWidth="66.0" text="Send" />
+                        <TextField fx:id="chatBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="378.0" promptText="Enter a chat message..." />
+                        <Button fx:id="sendButton" layoutX="377.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="66.0" text="▶▶▶">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </Button>
                      </children>
                   </Pane>
                </children>
             </VBox>
         <AnchorPane>
           <children>
-            <Label alignment="CENTER" font="$x1" layoutX="11.0" layoutY="10.0" prefHeight="27.0" prefWidth="108.0" style="&#10;" text="On right now" textAlignment="CENTER" textFill="$x2" wrapText="false" />
+            <Label alignment="CENTER" font="$x1" layoutX="11.0" layoutY="10.0" prefHeight="27.0" prefWidth="80.0" style="&#10;" text="Members" textFill="$x2" wrapText="false" />
                   <ListView fx:id="onlineUsersList" layoutX="11.0" layoutY="37.0" prefHeight="504.0" prefWidth="200.0" />
           </children>
         </AnchorPane>

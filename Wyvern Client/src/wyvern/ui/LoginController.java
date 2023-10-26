@@ -27,7 +27,6 @@ public class LoginController extends WyvernController {
 
     @FXML
     protected void initialize() {
-        setupButtonAnimation(login, 1.01);
         login.setOnAction(event -> {
             try {
                 AuthJob authJob = new AuthJob(email.getText(), pass.getText(), (result) ->

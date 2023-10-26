@@ -22,7 +22,6 @@ public class MainController extends WyvernController
 
     @FXML protected void initialize()
     {
-        setupButtonAnimation(sendButton, 1.1);
 
         sendButton.setOnAction((event) ->
                 sendAndClear());
