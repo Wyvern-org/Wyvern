@@ -8,33 +8,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="515.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.Register">
+<AnchorPane prefHeight="420.0" prefWidth="539.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.Register">
    <children>
-      <TextField fx:id="username" layoutX="16.0" layoutY="100.0" prefHeight="25.0" prefWidth="329.0" promptText="Pick a good username" />
-      <TextField fx:id="email" layoutX="16.0" layoutY="67.0" prefHeight="25.0" prefWidth="329.0" promptText="Email address" />
-      <PasswordField fx:id="password" layoutX="16.0" layoutY="133.0" prefHeight="25.0" prefWidth="329.0" promptText="Make a secure password!" />
-      <Label layoutX="16.0" layoutY="14.0" text="Welcome to Wyvern!">
+      <TextField fx:id="username" layoutX="16.0" layoutY="69.0" prefHeight="25.0" prefWidth="197.0" promptText="Pick a good username" />
+      <TextField fx:id="email" layoutX="16.0" layoutY="37.0" prefHeight="25.0" prefWidth="197.0" promptText="Email address" />
+      <PasswordField fx:id="password" layoutX="16.0" layoutY="100.0" prefHeight="25.0" prefWidth="197.0" promptText="Make a secure password!" />
+      <Label layoutX="16.0" layoutY="14.0" prefHeight="17.0" prefWidth="197.0" text="Setting up your Wyvern Account">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="16.0" layoutY="30.0" prefHeight="16.0" prefWidth="329.0" text="All you need to do to register, is complete the following form.">
-         <font>
-            <Font size="11.0" />
-         </font>
-      </Label>
-      <TextField fx:id="age" layoutX="17.0" layoutY="164.0" prefHeight="25.0" prefWidth="41.0" promptText="Age" />
-      <TextArea fx:id="TOSPanel" editable="false" layoutX="17.0" layoutY="210.0" prefHeight="195.0" prefWidth="772.0" promptText="Please wait for Wyvern Online Services to provide the TOS Document..." />
-      <Label layoutX="17.0" layoutY="194.0" prefHeight="16.0" prefWidth="630.0" text="Please read and review the Wyvern TOS below before continuing." />
-      <Label layoutX="20.0" layoutY="427.0" prefHeight="43.0" prefWidth="772.0" text="This only applies for use on Wyverns official server. Other Wyvern Hosters may enforce different network rules and you must follow their&#10;rules when on their network." />
-      <Button fx:id="Register" layoutX="20.0" layoutY="479.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Register Account!" />
-      <TextArea fx:id="ServiceInfo" editable="false" layoutX="363.0" layoutY="29.0" prefHeight="138.0" prefWidth="423.0" promptText="Wyvern Online Services is gathering information..." />
-      <Label layoutX="363.0" layoutY="14.0" prefHeight="16.0" prefWidth="441.0" text="Service information">
+      <TextField fx:id="age" layoutX="16.0" layoutY="132.0" prefHeight="25.0" prefWidth="41.0" promptText="Age" />
+      <TextArea fx:id="TOSPanel" editable="false" layoutX="17.0" layoutY="192.0" prefHeight="187.0" prefWidth="504.0" promptText="Please wait for Wyvern Online Services to provide the TOS Document..." wrapText="true" />
+      <Label layoutX="20.0" layoutY="175.0" prefHeight="17.0" prefWidth="504.0" text="Please read and review the Wyvern TOS below before continuing." />
+      <Button fx:id="Register" layoutX="17.0" layoutY="385.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Register Account!" />
+      <TextArea fx:id="ServiceInfo" editable="false" layoutX="235.0" layoutY="31.0" prefHeight="138.0" prefWidth="287.0" promptText="Wyvern Online Services is gathering information..." wrapText="true" />
+      <Label layoutX="235.0" layoutY="14.0" prefHeight="17.0" prefWidth="287.0" text="Service information">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="66.0" layoutY="168.0" prefHeight="17.0" prefWidth="441.0" text="If later on you are found to be under the age of 13, Your account WILL be deleted." />
-      <Label layoutX="17.0" layoutY="405.0" text="By continuing, you agree to these Terms of Service and will follow these terms on the Wyvern Network." />
    </children>
 </AnchorPane>

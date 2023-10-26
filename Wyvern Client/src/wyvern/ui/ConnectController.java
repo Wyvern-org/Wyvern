@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class ConnectController extends WyvernController {
     @FXML
-    protected Button wyvernButton, custom, login, register;
+    protected Button wyvernButton, custom, login, register, accmgr, logout;
     @FXML
     protected AnchorPane window;
     @FXML
@@ -56,6 +56,8 @@ public class ConnectController extends WyvernController {
             lblAuthStatus.setText("Logged in as " + dataStore.getString("username", "N/A"));
             login.setVisible(false);
             register.setVisible(false);
+            logout.setVisible(true);
+            accmgr.setVisible(true);
         }
 
         try {
