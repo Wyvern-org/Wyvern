@@ -2,6 +2,7 @@ package wyvern.net;
 
 import javafx.scene.control.Alert;
 import wyvern.Redux;
+import wyvern.util.pipes.SocketPipe;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -12,13 +13,16 @@ public class NetworkManager extends Thread
     private Socket socket;
     private DataInputStream dis;
     private DataOutputStream dos;
+    private SocketPipe socketPipe;
 
-    public void connect(String ip, int port) throws IOException
+    public void connect(String ip, int port, SocketPipe socketPipe) throws IOException
     {
         socket = new Socket();
         socket.connect(new InetSocketAddress(ip, port));
         dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
         dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+
+        socketPipe.flush(getSocket());
     }
 
     public void run()
@@ -46,9 +50,11 @@ public class NetworkManager extends Thread
                     throw new RuntimeException(e);
                 }
 
-                ex.printStackTrace();
+                ex.printStackTrace(System.err);
             }
         }
+
+        socketPipe.flush(getSocket());
     }
 
     public void sendPacket(AbstractPacket packet) throws IOException

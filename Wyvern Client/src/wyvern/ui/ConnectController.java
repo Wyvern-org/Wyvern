@@ -1,5 +1,7 @@
 package wyvern.ui;
 
+import com.sun.prism.paint.Paint;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -8,8 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import wyvern.Redux;
 import wyvern.main.Main;
+import wyvern.util.pipes.SocketPipe;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,16 +33,9 @@ public class ConnectController extends WyvernController {
     @FXML
     public void handleKeyPress(KeyEvent event) {
         if (event.getCode() == KeyCode.SLASH) {
-            try {
-                Redux.getInstance().getNetworkManager().connect("dev.chat.wyvernapp.com", 5200);
-                Redux.getInstance().loadWindow("/fxml/Main.fxml");
-                Redux.getInstance().getNetworkManager().start();
-            }catch (IOException ex) {
-                Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "Connection failed: " + ex.getMessage());
-            } catch (NumberFormatException ex) {
-                Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "You need to enter a valid port number (eg., 5600)");
-            }
+            connectAndOpen("dev.chat.wyvernapp.com", 5200);
         }
+
         if (event.getCode() == KeyCode.CONTROL) {
             Redux.getInstance().loadWindow("/fxml/CustomConnect.fxml");
         }
@@ -66,7 +63,7 @@ public class ConnectController extends WyvernController {
             news.setText(response.toString());
             connection.disconnect();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
         try {
             URL url = new URL("http://api.wyvernapp.com/verinf.txt");
@@ -90,27 +87,46 @@ public class ConnectController extends WyvernController {
             }
             connection.disconnect();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
 
-
-
         wyvernButton.setOnAction(event -> {
-            try {
-                Redux.getInstance().getNetworkManager().connect("prod.chat.wyvernapp.com", 5600);
-                Redux.getInstance().loadWindow("/fxml/Main.fxml");
-                Redux.getInstance().getNetworkManager().start();
-            } catch (IOException ex) {
-                Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "Connection failed: " + ex.getMessage());
-            } catch (NumberFormatException ex) {
-                Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "You need to enter a valid port number (eg., 5600)");
-            }
+            connectAndOpen("prod.chat.wyvernapp.com", 5600);
         });
+
         login.setOnAction(event -> {
                 Redux.getInstance().loadWindow("/fxml/Login.fxml");
         });
+
         register.setOnAction(event -> {
             Redux.getInstance().loadWindow("/fxml/Register.fxml");
         });
+    }
+
+    private void connectAndOpen(String host, int port)
+    {
+        SocketPipe socketPipe = (socket) ->
+        {
+            Platform.runLater(() ->
+            {
+                WyvernController controller = Redux.getInstance().getActiveController();
+                if (controller instanceof MainController)
+                {
+                    boolean connected = socket.isConnected();
+                    ((MainController) controller).statuscon.setText(connected ? "Connected" : "Disconnected");
+                    ((MainController) controller).statuscon.setTextFill(Color.rgb(connected ? 0 : 255, connected ? 255 : 0, 0));
+                }
+            });
+        };
+
+        try {
+            Redux.getInstance().getNetworkManager().connect(host, port, socketPipe);
+            Redux.getInstance().loadWindow("/fxml/Main.fxml");
+            Redux.getInstance().getNetworkManager().start();
+        } catch (IOException ex) {
+            Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "Connection failed: " + ex.getMessage());
+        } catch (NumberFormatException ex) {
+            Redux.getInstance().alert(Alert.AlertType.ERROR, "Oops!", "You need to enter a valid port number (eg., 5600)");
+        }
     }
 }
