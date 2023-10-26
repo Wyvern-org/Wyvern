@@ -4,31 +4,33 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="11.0" prefWidth="189.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.LoginController">
+<AnchorPane prefHeight="206.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.LoginController">
    <children>
-      <Rectangle fill="#686868" height="184.0" smooth="false" stroke="#ffffff00" strokeLineJoin="ROUND" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" width="189.0" />
-      <Button fx:id="login" layoutX="60.0" layoutY="147.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Login to Wyvern" />
-      <Label layoutX="12.0" layoutY="4.0" prefHeight="21.0" prefWidth="114.0" text="Welcome back!" textFill="#d1ffd3">
+      <Rectangle fill="#686868" height="219.0" smooth="false" stroke="#ffffff00" strokeLineJoin="ROUND" strokeMiterLimit="0.0" strokeType="INSIDE" strokeWidth="0.0" width="429.0" />
+      <Button fx:id="login" layoutX="295.0" layoutY="167.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Login to Wyvern" />
+      <Label layoutX="247.0" layoutY="24.0" prefHeight="21.0" prefWidth="114.0" text="Welcome back!" textFill="#d1ffd3">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="email" layoutX="14.0" layoutY="57.0" prefHeight="25.0" prefWidth="160.0" promptText="Username" />
-      <PasswordField fx:id="pass" layoutX="14.0" layoutY="89.0" prefHeight="25.0" prefWidth="160.0" promptText="Password" />
-      <CheckBox fx:id="remember" layoutX="14.0" layoutY="123.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="160.0" text="Remember login" textFill="WHITE">
+      <TextField fx:id="email" layoutX="249.0" layoutY="77.0" prefHeight="25.0" prefWidth="160.0" promptText="Username" />
+      <PasswordField fx:id="pass" layoutX="249.0" layoutY="109.0" prefHeight="25.0" prefWidth="160.0" promptText="Password" />
+      <CheckBox fx:id="remember" layoutX="249.0" layoutY="143.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="160.0" text="Remember login" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </CheckBox>
-      <Label layoutX="12.0" layoutY="25.0" prefHeight="21.0" prefWidth="160.0" text="Login to your wyvern account!" textFill="#d1ffd3">
+      <Label layoutX="247.0" layoutY="45.0" prefHeight="21.0" prefWidth="160.0" text="Login to your wyvern account!" textFill="#d1ffd3">
          <font>
             <Font name="System Bold" size="11.0" />
          </font>
       </Label>
+      <TextArea fx:id="statuscheck" layoutX="16.0" layoutY="21.0" prefHeight="182.0" prefWidth="207.0" promptText="Contacting Status Check API." wrapText="true" />
    </children>
 </AnchorPane>
