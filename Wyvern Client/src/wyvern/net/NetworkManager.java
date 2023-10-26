@@ -23,6 +23,7 @@ public class NetworkManager extends Thread
         dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
 
         socketPipe.flush(getSocket());
+        this.socketPipe = socketPipe;
     }
 
     public void run()
