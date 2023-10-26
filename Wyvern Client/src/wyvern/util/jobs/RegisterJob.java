@@ -2,6 +2,7 @@ package wyvern.util.jobs;
 
 import com.google.gson.JsonObject;
 import wyvern.util.Util;
+import wyvern.util.http.HttpRequest;
 
 public class RegisterJob extends AsyncJob
 {
@@ -15,9 +16,14 @@ public class RegisterJob extends AsyncJob
                 req.addProperty("email", email);
                 req.addProperty("username", username);
                 req.addProperty("password", password);
-                return Util.httpPOST("https://prod.uas.wyvernapp.com/api/v1/user", req.getAsString());
-            } catch (Exception ignored) {
-                //TODO: something went oops, handle it here
+
+                return new HttpRequest("http://prod.uas.wyvernapp.com/v1/user")
+                .setRequestMethod("PUT")
+                .setContentType("application/json")
+                .writeString(req.toString())
+                .readResponse();
+            } catch (Exception ex) {
+                ex.printStackTrace(System.err);
                 return null;
             }
         }, postJob);

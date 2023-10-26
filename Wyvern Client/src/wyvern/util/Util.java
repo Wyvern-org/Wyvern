@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class Util
@@ -90,7 +91,7 @@ public class Util
 
         try (OutputStream outputStream = connection.getOutputStream())
         {
-            byte[] input = requestBody.getBytes("utf-8");
+            byte[] input = requestBody.getBytes(StandardCharsets.UTF_8);
             outputStream.write(input, 0, input.length);
         }
 

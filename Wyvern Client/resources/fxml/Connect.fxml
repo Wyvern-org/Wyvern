@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="window" onKeyPressed="#handleKeyPress" prefHeight="344.0" prefWidth="585.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.ConnectController">
+<AnchorPane fx:id="window" onKeyPressed="#handleKeyPress" prefHeight="344.0" prefWidth="585.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="wyvern.ui.ConnectController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8a8a8a" height="48.0" layoutX="7.0" layoutY="284.0" stroke="BLACK" strokeType="INSIDE" width="572.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8a8a8a" height="277.0" layoutX="7.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" width="572.0" />
@@ -32,6 +32,6 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Label layoutX="240.0" layoutY="300.0" text="You are currently unauthenticated" />
+      <Label fx:id="lblAuthStatus" layoutX="240.0" layoutY="300.0" text="You are currently unauthenticated" />
    </children>
 </AnchorPane>

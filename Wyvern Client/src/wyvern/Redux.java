@@ -1,5 +1,6 @@
 package wyvern;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,8 +12,10 @@ import wyvern.net.handlers.ChatHandler;
 import wyvern.net.packets.Packet0Handshake;
 import wyvern.net.packets.Packet1Chat;
 import wyvern.ui.WyvernController;
+import wyvern.util.DataStore;
 import wyvern.util.Util;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.ScheduledExecutorService;
@@ -24,10 +27,12 @@ public class Redux
     private Stage primaryStage;
     private NetworkManager networkManager;
     private WyvernController activeController;
+    private DataStore dataStore;
 
     public void init(Stage primaryStage)
     {
         instance = this;
+        this.dataStore = new DataStore();
         this.primaryStage = primaryStage;
         networkManager = new NetworkManager();
         PacketRegistry.registerPacket(1, Packet1Chat.class);
@@ -76,13 +81,27 @@ public class Redux
 
     public void alert(Alert.AlertType alertType, String msg, String title, boolean wait)
     {
-        Alert alert = new Alert(alertType);
-        alert.setTitle("System Alert");
-        alert.setContentText(msg);
-        alert.setResizable(false);
-        alert.setHeaderText(title);
-        if (wait) alert.showAndWait();
-        else alert.show();
+        try
+        {
+            Platform.runLater(() ->
+            {
+                Alert alert = new Alert(alertType);
+                alert.setTitle("System Alert");
+                alert.setContentText(msg);
+                alert.setResizable(false);
+                alert.setHeaderText(title);
+                if (wait) alert.showAndWait();
+                else alert.show();
+            });
+        } catch (Exception ex) {
+            try
+            {
+                JOptionPane.showMessageDialog(null, msg, title, JOptionPane.PLAIN_MESSAGE);
+            } catch (Exception ex2) {
+                ex.printStackTrace(System.err);
+                ex2.printStackTrace(System.err);
+            }
+        }
     }
 
     public NetworkManager getNetworkManager()
@@ -93,6 +112,11 @@ public class Redux
     public WyvernController getActiveController()
     {
         return activeController;
+    }
+
+    public DataStore getDataStore()
+    {
+        return dataStore;
     }
 
     private static Redux instance;

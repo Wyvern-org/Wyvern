@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import wyvern.Redux;
 import wyvern.main.Main;
+import wyvern.util.DataStore;
 import wyvern.util.pipes.SocketPipe;
 
 import java.io.BufferedReader;
@@ -28,7 +29,7 @@ public class ConnectController extends WyvernController {
     @FXML
     protected AnchorPane window;
     @FXML
-    protected Label news,newstitle;
+    protected Label news,newstitle, lblAuthStatus;
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
@@ -47,6 +48,13 @@ public class ConnectController extends WyvernController {
 
     @FXML
     protected void initialize() {
+        // check if we are authenticated
+        DataStore dataStore = Redux.getInstance().getDataStore();
+        if (dataStore.hasString("username"))
+        {
+            lblAuthStatus.setText("Logged in as " + dataStore.getString("username", "N/A"));
+        }
+
         try {
             URL url = new URL("http://api.wyvernapp.com/news.txt");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

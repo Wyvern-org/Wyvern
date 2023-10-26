@@ -2,6 +2,7 @@ package wyvern.util.jobs;
 
 import com.google.gson.JsonObject;
 import wyvern.util.Util;
+import wyvern.util.http.HttpRequest;
 
 import java.io.IOException;
 
@@ -22,9 +23,14 @@ public class AuthJob extends AsyncJob
                 JsonObject req = new JsonObject();
                 req.addProperty("username", id);
                 req.addProperty("password", password);
-                return Util.httpPOST("https://prod.uas.wyvernapp.com/api/v1/authenticate", req.toString());
-            } catch (IOException ignored) {
-                //TODO: something went oops. handle it here
+
+                return new HttpRequest("http://prod.uas.wyvernapp.com/v1/authenticate")
+                .setRequestMethod("POST")
+                .setContentType("application/json")
+                .writeString(req.toString())
+                .readResponse();
+            } catch (Exception ex) {
+                ex.printStackTrace(System.err);
                 return null;
             }
         }, postJob);
