@@ -64,12 +64,19 @@ public class LoginController extends WyvernController {
                         String username = res.get("username").getAsString();
                         String uuid = res.get("uuid").getAsString();
                         String jwt = res.get("jwt").getAsString();
+                        String email = res.get("email").getAsString();
+                        String created = res.get("created_at").getAsString();
+                        int permission = res.get("permissions").getAsInt();
 
                         System.out.println("Logged in as " + username);
 
                         dataStore.setString("username", username);
                         dataStore.setString("uuid", uuid);
                         dataStore.setString("jwt", jwt);
+                        //dataStore.setString("email", email);
+                        //dataStore.setString("created_at", created); TODO: Allow the UAS to send these to the client so they can be read.
+                        //dataStore.setInt("permission", permission); TODO: At the current time these throw Null Pointers when requested.
+
                         //TODO: JWT should be saved to a file so we can validate it on the API rather than asking for login every time
                         Platform.runLater(() -> Redux.getInstance().loadWindow("/fxml/Connect.fxml"));
                     } else {
