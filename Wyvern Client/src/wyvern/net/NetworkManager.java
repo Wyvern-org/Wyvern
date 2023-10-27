@@ -28,7 +28,7 @@ public class NetworkManager extends Thread
 
     public void run()
     {
-        while (!socket.isClosed())
+        while (!socket.isClosed() && socket.isConnected())
         {
             try
             {
@@ -40,18 +40,18 @@ public class NetworkManager extends Thread
                     packet.readData(dis);
 
                     PacketHandler packetHandler = PacketRegistry.getPacketHandler(packetID).newInstance();
-                    packetHandler.handlePacket(packet);
+                    packetHandler.handlePacket(this, packet);
                 }
             } catch (Exception ex) {
                 try
                 {
                     if (ex instanceof EOFException)
                         socket.close();
+                    else ex.printStackTrace(System.err);
+                    socketPipe.flush(getSocket());
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace(System.err);
                 }
-
-                ex.printStackTrace(System.err);
             }
         }
 
@@ -74,5 +74,10 @@ public class NetworkManager extends Thread
     public Socket getSocket()
     {
         return socket;
+    }
+
+    public SocketPipe getSocketPipe()
+    {
+        return socketPipe;
     }
 }

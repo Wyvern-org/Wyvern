@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import wyvern.Client;
 import wyvern.Redux;
 import wyvern.net.AbstractPacket;
+import wyvern.net.NetworkManager;
 import wyvern.net.PacketHandler;
 import wyvern.net.packets.Packet1Chat;
 import wyvern.ui.MainController;
@@ -12,7 +13,7 @@ import wyvern.ui.WyvernController;
 public class ChatHandler implements PacketHandler
 {
     @Override
-    public void handlePacket(AbstractPacket packet)
+    public void handlePacket(NetworkManager networkManager, AbstractPacket packet)
     {
         Packet1Chat chat = (Packet1Chat) packet;
 

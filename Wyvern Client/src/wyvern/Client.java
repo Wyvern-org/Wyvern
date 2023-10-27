@@ -596,7 +596,7 @@ public class Client {
                                 packet.readData(dis);
 
                                 PacketHandler packetHandler = PacketRegistry.getPacketHandler(packetID).newInstance();
-                                packetHandler.handlePacket(packet);
+//                                packetHandler.handlePacket(packet);
                             }
 
                             /*String message = dis.readUTF();

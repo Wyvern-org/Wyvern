@@ -125,9 +125,10 @@ public class ConnectController extends WyvernController {
                 WyvernController controller = Redux.getInstance().getActiveController();
                 if (controller instanceof MainController)
                 {
-                    boolean connected = socket.isConnected();
+                    boolean connected = socket.isConnected() && !socket.isClosed();
                     ((MainController) controller).statuscon.setText(connected ? "Connected" : "Disconnected");
                     ((MainController) controller).statuscon.setTextFill(Color.rgb(connected ? 0 : 255, connected ? 255 : 0, 0));
+                    System.out.println("Connection status updated: " + (connected ? "Connected" : "Disconnected"));
                 }
             });
         };
