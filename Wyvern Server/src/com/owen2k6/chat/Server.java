@@ -40,9 +40,9 @@ public class Server {
     }
 
     private ServerSocket server;
-    private int port = 5600;
+    private int port = 5200;
     private List<Client> clients;
-    private List<ClientRedux> reduxClients;
+    public List<ClientRedux> reduxClients;
 
     public ArrayList<servers> servers;
     public ArrayList<channels> channels;
@@ -253,6 +253,12 @@ public class Server {
 
         Server server = new Server();
         server.start();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() ->
+        {
+            for (ClientRedux client : getInstance().reduxClients)
+                client.disconnect("Server shutting down");
+        }));
     }
 
     public void start() throws IOException {
@@ -324,7 +330,8 @@ public class Server {
                     reduxClients.add(reduxClient);
                     System.out.println("Client join: " + reduxClient);
                     //For development builds, I simply comment this out since i got no idea how to use this and it doesnt work when i add it to my configuration
-                    if(!System.getenv().containsKey("WYVERN_DEV")) { // NOTE TO DEVS: add this environment variable to your intellij configuration
+                    // note for owen: i fixed this. you can add "-Dwyvern.dev=" to your launch parameters (before -jar), and it will work.
+                    if(!System.getProperties().containsKey("wyvern.dev")) { // NOTE TO DEVS: add this environment variable to your intellij configuration
                         sumbitglobalmessage("Wyvern Servers have not launched yet! \nPlease wait until the official launch is done. \nYou may self host a wyvern server while you wait \nhttps://github.com/wyvern-org/wyvern\n\nCopyright (c) Wyvern 2023");
                         reduxClient.disconnect("Disconnected from server");
                     }
@@ -369,7 +376,7 @@ public class Server {
     public void sumbitglobalmessage(String message){
         for (ClientRedux c : reduxClients) {
             try {
-                    c.sendMessage("{GLOBALALERT:" + message);
+                    c.sendMessage(message);
             } catch (Exception e) {
                 //ignore
 

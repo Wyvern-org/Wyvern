@@ -9,8 +9,11 @@ import wyvern.main.Main;
 import wyvern.net.NetworkManager;
 import wyvern.net.PacketRegistry;
 import wyvern.net.handlers.ChatHandler;
+import wyvern.net.handlers.DisconnectHandler;
+import wyvern.net.handlers.HandshakeHandler;
 import wyvern.net.packets.Packet0Handshake;
 import wyvern.net.packets.Packet1Chat;
+import wyvern.net.packets.Packet2Disconnect;
 import wyvern.ui.WyvernController;
 import wyvern.util.DataStore;
 import wyvern.util.Util;
@@ -35,8 +38,12 @@ public class Redux
         this.dataStore = new DataStore();
         this.primaryStage = primaryStage;
         networkManager = new NetworkManager();
+        PacketRegistry.registerPacket(0, Packet0Handshake.class);
+        PacketRegistry.registerPacketHandler(0, HandshakeHandler.class);
         PacketRegistry.registerPacket(1, Packet1Chat.class);
         PacketRegistry.registerPacketHandler(1, ChatHandler.class);
+        PacketRegistry.registerPacket(2, Packet2Disconnect.class);
+        PacketRegistry.registerPacketHandler(2, DisconnectHandler.class);
         loadWindow("/fxml/Connect.fxml");
 
         // keep the network connection alive

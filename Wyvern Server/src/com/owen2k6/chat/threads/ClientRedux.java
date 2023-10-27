@@ -7,6 +7,7 @@ import com.owen2k6.chat.network.redux.AbstractPacket;
 import com.owen2k6.chat.network.redux.PacketHandler;
 import com.owen2k6.chat.network.redux.PacketRegistry;
 import com.owen2k6.chat.network.redux.packets.Packet1Chat;
+import com.owen2k6.chat.network.redux.packets.Packet2Disconnect;
 
 import java.io.*;
 import java.net.Socket;
@@ -27,10 +28,11 @@ public class ClientRedux extends Thread
         this.socket = socket;
         try
         {
+            this.socket.setKeepAlive(true);
             this.dis = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             this.dos = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
     }
 
@@ -98,10 +100,16 @@ public class ClientRedux extends Thread
         disconnect("Quit");
     }
 
-    public void disconnect(String message) throws IOException
+    public void disconnect(String message)
     {
-        sendMessage(message);
-        socket.close();
+        try
+        {
+            sendPacket(new Packet2Disconnect(message));
+            Server.getInstance().broadcastMessage(getUserInfo().username + " has disconnected", null);
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace(System.err);
+        }
     }
 
     public void setLoggedIn(boolean flag)

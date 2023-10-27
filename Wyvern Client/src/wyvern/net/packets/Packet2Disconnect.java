@@ -32,4 +32,9 @@ public class Packet2Disconnect extends AbstractPacket
     {
         dos.writeUTF(this.reason);
     }
+
+    public String getReason()
+    {
+        return reason;
+    }
 }
