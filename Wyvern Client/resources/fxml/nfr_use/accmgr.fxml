@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="635.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.Accmgr">
+   <children>
+      <ScrollPane layoutX="3.0" layoutY="4.0" prefHeight="626.0" prefWidth="629.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="617.0" prefWidth="621.0">
+               <children>
+                  <SplitPane dividerPositions="0.5, 0.5, 0.5" layoutX="3.0" orientation="VERTICAL" prefHeight="619.0" prefWidth="616.0">
+                    <items>
+                        <TitledPane animated="false" prefHeight="138.0" prefWidth="585.0" text="Account Information">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="605.0" />
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" prefHeight="138.0" prefWidth="585.0" text="Settings">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="605.0" />
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" prefHeight="138.0" prefWidth="585.0" text="Edit Account">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="605.0" />
+                           </content>
+                        </TitledPane>
+                        <TitledPane animated="false" prefHeight="138.0" prefWidth="585.0" text="Danger Zone">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="605.0" />
+                           </content>
+                        </TitledPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
