@@ -35,8 +35,14 @@ public class Bcast implements CommandHandler
             }
             return;
         }
+
+        StringBuilder sb = new StringBuilder();
+        for (String str : args)
+            sb.append(str).append(" ");
+        String message = sb.toString().trim();
+
         try {
-            Server.getInstance().broadcastMessage("=== " + args.toString() + "===", null);
+            Server.getInstance().broadcastMessage("=== " + message + "===", null);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
