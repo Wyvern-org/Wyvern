@@ -64,9 +64,9 @@ public class LoginController extends WyvernController {
                         String username = res.get("username").getAsString();
                         String uuid = res.get("uuid").getAsString();
                         String jwt = res.get("jwt").getAsString();
-                        String email = res.get("email").getAsString();
-                        String created = res.get("created_at").getAsString();
-                        int permission = res.get("permissions").getAsInt();
+                        //String email = res.get("email").getAsString();
+                        //String created = res.get("created_at").getAsString();
+                        //int permission = res.get("permissions").getAsInt();
 
                         System.out.println("Logged in as " + username);
 
